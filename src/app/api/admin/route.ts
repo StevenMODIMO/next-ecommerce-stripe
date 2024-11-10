@@ -16,11 +16,10 @@ export async function POST(req: NextRequest) {
   let fileUrl = null;
 
   if (file) {
-    // Upload the file to Vercel Blob
     const uploadResult = await put(file.name, file, {
-      access: "public", // Optional: set the access level
+      access: "public",
     });
-    fileUrl = uploadResult.url; // Get the URL of the uploaded file
+    fileUrl = uploadResult.url;
   }
 
   return NextResponse.json({
@@ -29,6 +28,6 @@ export async function POST(req: NextRequest) {
     category,
     quantity,
     price,
-    fileUrl, // Include the file URL in the response
+    fileUrl,
   });
 }
