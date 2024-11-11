@@ -1,9 +1,20 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { dbConnect } from "@/lib/db";
-import { put } from "@vercel/blob";
+import Product from "@/models/Product";
+import { put, BlobAccessError } from "@vercel/blob";
+
+await dbConnect();
+
+export async function GET() {
+  try {
+    const products = await Product.find();
+    return NextResponse.json(products);
+  } catch (error) {
+    return NextResponse.json({ error });
+  }
+}
 
 export async function POST(req: NextRequest) {
-  await dbConnect();
   const body = await req.formData();
 
   const productName = body.get("productName");
@@ -11,23 +22,28 @@ export async function POST(req: NextRequest) {
   const category = body.get("category");
   const quantity = body.get("quantity");
   const price = body.get("price");
-  const file = body.get("file") as File | null;
+  const file = body.get("file") as File;
 
-  let fileUrl = null;
-
-  if (file) {
-    const uploadResult = await put(file.name, file, {
-      access: "public",
+  try {
+    const blob = await put(file.name, file, { access: "public" });
+    const fileUrl = blob.url;
+    const product = await Product.create({
+      productName,
+      description,
+      category,
+      quantity,
+      price,
+      fileUrl,
     });
-    fileUrl = uploadResult.url;
+    return NextResponse.json({
+      message: "Product added successfully",
+      product,
+    });
+  } catch (error) {
+    if (error instanceof BlobAccessError) {
+      return NextResponse.json({ error });
+    } else {
+      throw error;
+    }
   }
-
-  return NextResponse.json({
-    productName,
-    description,
-    category,
-    quantity,
-    price,
-    fileUrl,
-  });
 }

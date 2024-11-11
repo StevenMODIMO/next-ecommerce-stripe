@@ -33,6 +33,11 @@ export default function AdminForm() {
 
     if (response.ok) {
       console.log(json);
+      setProductName("")
+      setDescription("")
+      setCategory("")
+      setPrice("")
+      setQuantity("")
     } else {
       console.log(json.error);
     }
