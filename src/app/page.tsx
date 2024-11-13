@@ -1,9 +1,32 @@
-import Images from "@/components/Image";
+import Link from "next/link";
+import Image from "next/image";
 
-export default function Home() {
+interface Products {
+  _id: string;
+  productName: string;
+  price: string;
+  fileUrl: string;
+}
+
+export default async function Home() {
+  const response = await fetch("http://localhost:3000/api/admin");
+  const products: Products[] = await response.json();
+
+
   return (
-    <main>
-      <Images />
-    </main>
+    <div className="w-[80%] mx-auto">
+      <header className="font-bold text-3xl">
+        <h1>Posts</h1>
+      </header>
+      {products.map(({ _id, productName, price, fileUrl }) => (
+        <section key={_id}>
+          <div>
+            <Image src={fileUrl} alt={productName} width={40} height={40} />
+          </div>
+          <p>{productName}</p>
+          <p>{price}</p>
+        </section>
+      ))}
+    </div>
   );
 }
