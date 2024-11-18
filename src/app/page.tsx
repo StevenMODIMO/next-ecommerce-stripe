@@ -8,22 +8,20 @@ interface Products {
   fileUrl: string;
 }
 
-export default async function Home() {
-  // const response = await fetch("http://localhost:3000/api/admin");
-  // const products: Products[] = await response.json();
 
+export default async function Home() {
+  const response = await fetch("http://localhost:3000/api/admin");
+  const products: Products[] = await response.json();
 
   return (
-    <div className="w-[80%] mx-auto">
-      {/* {products.map(({ _id, productName, price, fileUrl }) => (
-        <section key={_id}>
-          <div>
-            <Image src={fileUrl} alt={productName} width={40} height={40} />
-          </div>
+    <div>
+      {products.map(({ _id, productName, price, fileUrl }) => (
+        <Link key={_id} href={_id}>
+          <Image src={fileUrl} alt={productName} width={60} height={60} />
           <p>{productName}</p>
           <p>{price}</p>
-        </section>
-      ))} */}
+        </Link>
+      ))}
     </div>
   );
 }
