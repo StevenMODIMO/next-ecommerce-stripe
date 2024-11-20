@@ -17,3 +17,11 @@ export async function GET(
     return NextResponse.json(error);
   }
 }
+
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const { id } = await params;
+  const body = await req.json();
+}

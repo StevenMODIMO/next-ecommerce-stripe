@@ -9,7 +9,8 @@ interface ProductTypes {
 }
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const response = await fetch(`http://localhost:3000/api/admin/${params.id}`);
+  const { id } = await params
+  const response = await fetch(`http://localhost:3000/api/admin/${id}`);
   const { productName, description }: ProductTypes = await response.json();
 
   return {
