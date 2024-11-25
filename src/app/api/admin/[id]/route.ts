@@ -4,10 +4,9 @@ import Product from "@/models/Product";
 
 await dbConnect();
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+type Params = Promise<{ id: string }>;
+
+export async function GET(req: NextRequest, { params }: { params: Params }) {
   const { id } = await params;
 
   try {
@@ -18,10 +17,9 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(req: NextRequest, { params }: { params: Params }) {
   const { id } = await params;
   const body = await req.json();
+
+  return NextResponse.json(body);
 }

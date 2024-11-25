@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import Categories from '@/components/Categories'
 
 interface Products {
   _id: string;
@@ -17,7 +18,7 @@ export default async function Home() {
       <header className="font-bold text-xl sm:text-2xl lg:text-3xl">
         <h1>Best selling products</h1>
       </header>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
         {products.map(({ _id, productName, price, fileUrl }) => (
           <div className="p-2" key={_id}>
             <Link href={_id}>
@@ -35,6 +36,7 @@ export default async function Home() {
           <h1>Sort by category</h1>
         </header>
       </main>
+      <Categories />
     </div>
   );
 }

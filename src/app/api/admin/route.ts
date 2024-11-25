@@ -5,10 +5,50 @@ import { put, BlobAccessError } from "@vercel/blob";
 
 await dbConnect();
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const url = req.nextUrl.searchParams;
+  const category = url.get("category");
   try {
-    const products = await Product.find({});
-    return NextResponse.json(products);
+    if (category) {
+      const products = await Product.find({ category }).exec();
+      return NextResponse.json(products);
+    } else {
+      const categories = [
+        "electronics",
+        "fashion",
+        "home-living",
+        "transport",
+        "cosmetics",
+      ];
+
+      const pipeline = [
+        {
+          $match: { category: { $in: categories } },
+        },
+        {
+          $group: {
+            _id: "$category",
+            products: { $push: "$$ROOT" },
+          },
+        },
+        {
+          $project: {
+            category: "$_id",
+            products: { $slice: ["$products", 1] },
+          },
+        },
+        { $unwind: "$products" },
+        {
+          $replaceRoot: { newRoot: "$products" },
+        },
+        { $limit: 10 },
+      ];
+
+      const groupedProducts = await Product.aggregate(pipeline);
+
+      const products = groupedProducts.slice(0, 10);
+      return NextResponse.json(products);
+    }
   } catch (error) {
     return NextResponse.json({ error });
   }

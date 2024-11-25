@@ -6,10 +6,14 @@ interface ProductTypes {
   description: string;
   price: string;
   fileUrl: string;
+  category: string;
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const { id } = await params
+type Params = Promise<{ id: string }>;
+
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const { id } = await params;
   const response = await fetch(`http://localhost:3000/api/admin/${id}`);
   const { productName, description }: ProductTypes = await response.json();
 
@@ -19,9 +23,11 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   };
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const response = await fetch(`http://localhost:3000/api/admin/${params.id}`);
-  const { id, productName, description, price, fileUrl }: ProductTypes =
+export default async function Page({ params }: { params: Params }) {
+  const { id } = await params;
+  const response = await fetch(`http://localhost:3000/api/admin/${id}`);
+
+  const { productName, description, price, fileUrl, category }: ProductTypes =
     await response.json();
   return (
     <main>
@@ -29,6 +35,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       <p>{productName}</p>
       <p>{description}</p>
       <p>{price} USD</p>
+      <p>{category}</p>
     </main>
   );
 }
