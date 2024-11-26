@@ -52,7 +52,7 @@ export default function Categories() {
 
   return (
     <div>
-      <div className="flex gap-4 mt-4">
+      <div className="md:flex gap-4 mt-4">
         {categories.map((cat) => (
           <button
             className="bg-[#E27210] p-2 rounded-md text-xl"
