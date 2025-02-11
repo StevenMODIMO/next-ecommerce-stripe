@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
-import { Nunito } from "next/font/google";
+import { Nunito, Inter } from "next/font/google";
+import ProgressBarProvider from "@/components/ProgressBarProvider";
 
 export const metadata: Metadata = {
   title: "Quick Cart",
-  description: "shopping cart + payment intergration with stripe.",
+  description: "Nextjs ecommerce web app + Stripejs payment gateway.",
 };
+
+const inter = Inter({ subsets: ["latin", "latin-ext", "vietnamese"] });
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -17,11 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${nunito.className} mx-4 my-4 sm:mx-10 md:mx-16 lg:mx-28`}
-      >
+      <body className={`${nunito.className}`}>
         <Header />
-        {children}
+        <div className="mx-4 h-screen pt-16">
+          <ProgressBarProvider>{children}</ProgressBarProvider>
+        </div>
       </body>
     </html>
   );
