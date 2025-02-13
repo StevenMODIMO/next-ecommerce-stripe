@@ -39,6 +39,16 @@ export const navLinks: LinkTypes[] = [
     name: "Shop",
     path: "/products",
   },
+  {
+    id: 5,
+    name: "SignUp",
+    path: "/signup",
+  },
+  {
+    id: 6,
+    name: "SignIn",
+    path: "/signin",
+  },
 ];
 
 export default function MobileNav({ setShowLinks }: PropTypes) {

@@ -7,7 +7,7 @@ import {
   IoIosSearch,
   IoMdHeartEmpty,
 } from "react-icons/io";
-import { MdOutlineAccountCircle } from "react-icons/md";
+import { MdOutlineAccountCircle, MdOutlineNewLabel } from "react-icons/md";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Link from "next/link";
 import MobileNav from "@/components/MobileNav";
@@ -18,6 +18,7 @@ import {
   MdOutlineFeaturedPlayList,
   MdMotionPhotosPaused,
 } from "react-icons/md";
+import { BiSolidLogIn } from "react-icons/bi";
 
 export default function Header() {
   const [showLinks, setShowLinks] = useState(false);
@@ -59,6 +60,10 @@ export default function Header() {
                 <MdMotionPhotosPaused />
               ) : name === "Shop" ? (
                 <TbShoppingCartBolt />
+              ) : name === "SignUp" ? (
+                <MdOutlineNewLabel />
+              ) : name === "SignIn" ? (
+                <BiSolidLogIn />
               ) : (
                 ""
               )}
@@ -66,23 +71,23 @@ export default function Header() {
             </Link>
           ))}
         </div>
-        <Link href="/cart" className="text-xl">
+        <Link href="/cart" className="text-2xl">
           <IoCartOutline />
         </Link>
         <div className="relative">
-          <IoIosNotificationsOutline className="text-xl" />
+          <IoIosNotificationsOutline className="text-2xl" />
           <p className="absolute -top-1 -right-2 text-xs bg-[#E27210] rounded-full text-white w-4 h-4 tflex text-center">
             0
           </p>
         </div>
         <div className="relative">
-          <IoMdHeartEmpty className="text-xl" />
+          <IoMdHeartEmpty className="text-2xl" />
           <p className="absolute -top-1 -right-2 text-xs bg-[#E27210] rounded-full text-white w-4 h-4 tflex text-center">
             0
           </p>
         </div>
         <div>
-          <MdOutlineAccountCircle className="text-xl" />
+          <MdOutlineAccountCircle className="text-2xl" />
         </div>
         <div onClick={() => setShowLinks(!showLinks)} className="md:hidden">
           {!showLinks ? <FaBars /> : <FaTimes />}

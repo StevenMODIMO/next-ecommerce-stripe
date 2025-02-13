@@ -15,15 +15,20 @@ const nunito = Nunito({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
+  cart,
 }: Readonly<{
   children: React.ReactNode;
+  cart: React.ReactNode;
 }>) {
   return (
     <html lang="en">
       <body className={`${nunito.className}`}>
         <Header />
         <div className="mx-4 h-screen pt-16">
-          <ProgressBarProvider>{children}</ProgressBarProvider>
+          <ProgressBarProvider>
+            {children}
+            {cart}
+          </ProgressBarProvider>
         </div>
       </body>
     </html>
