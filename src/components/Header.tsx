@@ -2,7 +2,11 @@
 import Image from "next/image";
 import logo from "@/app/assets/cart-logo.svg";
 import { IoCartOutline } from "react-icons/io5";
-import { IoIosNotificationsOutline, IoIosSearch } from "react-icons/io";
+import {
+  IoIosNotificationsOutline,
+  IoIosSearch,
+  IoMdHeartEmpty,
+} from "react-icons/io";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Link from "next/link";
@@ -62,17 +66,23 @@ export default function Header() {
             </Link>
           ))}
         </div>
-        <Link href="/cart" className="text-2xl">
+        <Link href="/cart" className="text-xl">
           <IoCartOutline />
         </Link>
         <div className="relative">
-          <IoIosNotificationsOutline className="text-2xl" />
-          <p className="absolute -top-1 -right-1 text-xs bg-[#E27210] rounded-full text-white w-4 h-4 tflex text-center">
+          <IoIosNotificationsOutline className="text-xl" />
+          <p className="absolute -top-1 -right-2 text-xs bg-[#E27210] rounded-full text-white w-4 h-4 tflex text-center">
+            0
+          </p>
+        </div>
+        <div className="relative">
+          <IoMdHeartEmpty className="text-xl" />
+          <p className="absolute -top-1 -right-2 text-xs bg-[#E27210] rounded-full text-white w-4 h-4 tflex text-center">
             0
           </p>
         </div>
         <div>
-          <MdOutlineAccountCircle className="text-2xl" />
+          <MdOutlineAccountCircle className="text-xl" />
         </div>
         <div onClick={() => setShowLinks(!showLinks)} className="md:hidden">
           {!showLinks ? <FaBars /> : <FaTimes />}
