@@ -31,7 +31,7 @@ export default function Header() {
       </header>
       <div className="flex items-center gap-4">
         {" "}
-        <label className="rounded-md bg-gray-100 flex items-center gap-2">
+        <label className="hidden lg:rounded-md lg:bg-gray-100 lg:flex lg:items-center lg:gap-2">
           <IoIosSearch className="text-[#E27210] text-lg" />
           <input
             type="text"
