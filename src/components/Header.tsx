@@ -47,7 +47,7 @@ export default function Header() {
         <div className="hidden md:flex md:gap-3 lg:mr-6">
           {navLinks.map(({ id, name, path }) => (
             <Link
-              className="text-sm flex items-center gap-2 lg:text-[15px] hover:border-b-2 hover:border-[#E27210] transition-all duration-200 ease-in-out"
+              className="text-sm flex items-center gap-2 lg:text-[15px] hover:border-b-2 hover:border-[#E27210] transition-all duration-75 ease-in-out"
               onClick={() => setShowLinks(false)}
               key={id}
               href={path}
