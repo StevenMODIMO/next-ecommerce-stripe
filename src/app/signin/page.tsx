@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-    title: 'Get started',
-    description: 'Route for users to create account'
+    title: 'Log In',
+    description: 'Log in to continue for existing users'
 }
 
 export default function Cart() {

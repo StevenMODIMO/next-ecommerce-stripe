@@ -12,7 +12,7 @@ export default function Modal({ children }: ModalProps) {
   const router = useRouter();
   return (
     <div className="bg-black/80 h-screen absolute top-0 right-0 w-[50%] p-3">
-      <header className="flex justify-end p-2" onClick={() => router.back()}>
+      <header className="w-fit rounded-full bg-white p-2 text-2xl text-gray-400" onClick={() => router.back()}>
         <FaTimes />
       </header>
       {children}

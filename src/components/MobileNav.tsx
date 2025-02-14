@@ -6,7 +6,9 @@ import { TbPhoneCall, TbShoppingCartBolt } from "react-icons/tb";
 import {
   MdOutlineFeaturedPlayList,
   MdMotionPhotosPaused,
+  MdOutlineNewLabel,
 } from "react-icons/md";
+import { BiSolidLogIn } from "react-icons/bi";
 
 interface PropTypes {
   setShowLinks: React.Dispatch<React.SetStateAction<boolean>>;
@@ -76,6 +78,10 @@ export default function MobileNav({ setShowLinks }: PropTypes) {
               <MdMotionPhotosPaused />
             ) : name === "Shop" ? (
               <TbShoppingCartBolt />
+            ) : name === "SignUp" ? (
+              <MdOutlineNewLabel />
+            ) : name === "SignIn" ? (
+              <BiSolidLogIn />
             ) : (
               ""
             )}
