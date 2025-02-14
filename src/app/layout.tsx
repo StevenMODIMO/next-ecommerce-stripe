@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
-import { Nunito, Inter } from "next/font/google";
+import { Nunito } from "next/font/google";
 import ProgressBarProvider from "@/components/ProgressBarProvider";
 
 export const metadata: Metadata = {
@@ -9,16 +9,15 @@ export const metadata: Metadata = {
   description: "Nextjs ecommerce web app + Stripejs payment gateway.",
 };
 
-const inter = Inter({ subsets: ["latin", "latin-ext", "vietnamese"] });
 
 const nunito = Nunito({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
-  cart,
+  cartModal,
 }: Readonly<{
   children: React.ReactNode;
-  cart: React.ReactNode;
+  cartModal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -27,7 +26,7 @@ export default function RootLayout({
         <div className="mx-4 h-screen pt-16">
           <ProgressBarProvider>
             {children}
-            {cart}
+            {cartModal}
           </ProgressBarProvider>
         </div>
       </body>
