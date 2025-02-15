@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { FaTimes } from "react-icons/fa";
+import { motion, AnimatePresence } from "motion/react";
 import { useRouter } from "next/navigation";
+import { IoIosArrowBack } from "react-icons/io";
 
 interface ModalProps {
   children: React.ReactNode;
@@ -10,12 +11,30 @@ interface ModalProps {
 
 export default function Modal({ children }: ModalProps) {
   const router = useRouter();
+
   return (
-    <div className="bg-black/80 h-screen absolute top-0 right-0 w-[50%] p-3">
-      <header className="w-fit rounded-full bg-white p-2 text-2xl text-gray-400" onClick={() => router.back()}>
-        <FaTimes />
-      </header>
-      {children}
-    </div>
+    <AnimatePresence>
+      <div
+        className="bg-black/10 fixed inset-0 flex justify-end"
+        onClick={() => router.back()}
+      >
+        <motion.div
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "100%" }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          onClick={(e) => e.stopPropagation()}
+          className="bg-white min-h-screen w-full sm:w-[50%] shadow-lg overflow-hidden"
+        >
+          <header
+            className="w-fit rounded-full p-2 text-xl text-gray-400 cursor-pointer sm:text-2xl"
+            onClick={() => router.back()}
+          >
+            <IoIosArrowBack />
+          </header>
+          {children}
+        </motion.div>
+      </div>
+    </AnimatePresence>
   );
 }
