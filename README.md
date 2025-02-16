@@ -1,1 +1,1 @@
-# Quick cart
+# Quick cart | Minimal Viable Product
