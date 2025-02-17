@@ -1,16 +1,39 @@
 "use client";
+
 import { useState } from "react";
 import ProductOutput from "./ProductOutput";
+import { FaFileMedical } from "react-icons/fa";
 
 export default function AdminForm() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState<number>(1); // Ensure price is either a number or an empty string
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [price, setPrice] = useState<number>(1);
   const [quantity, setQuantity] = useState<number>(1);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
 
   return (
-    <div>
+    <div className="flex gap-3 items-center justify-center">
       <form className="flex flex-col gap-3 text-gray-400 p-4 rounded-md">
+        <label className="flex flex-col items-center gap-2 cursor-pointer">
+          <FaFileMedical size={24} />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="hidden"
+          />
+          <p className="text-sm">Upload Image</p>
+        </label>
+
         <label>
           <p>Name</p>
           <input
@@ -20,6 +43,7 @@ export default function AdminForm() {
             placeholder="Enter product name"
           />
         </label>
+
         <label>
           <p>Description</p>
           <textarea
@@ -29,6 +53,7 @@ export default function AdminForm() {
             placeholder="Enter product description"
           ></textarea>
         </label>
+
         <label>
           <p>Price</p>
           <input
@@ -39,6 +64,7 @@ export default function AdminForm() {
             placeholder="Enter product price"
           />
         </label>
+
         <label>
           <p>Quantity</p>
           <input
@@ -53,15 +79,21 @@ export default function AdminForm() {
             placeholder="Enter product quantity"
           />
         </label>
-        <button className="text-white bg-[#E27210] w-fit mx-auto p-2 rounded-tr rounded-bl">
+
+        <button
+          type="submit"
+          className="text-white bg-[#E27210] w-fit mx-auto p-2 rounded-tr rounded-bl"
+        >
           Add product
         </button>
       </form>
+
       <ProductOutput
         name={name}
         description={description}
         price={price}
         quantity={quantity}
+        image={imagePreview}
       />
     </div>
   );
