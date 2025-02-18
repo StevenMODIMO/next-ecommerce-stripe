@@ -1,68 +1,87 @@
-import { query } from "@/lib/db";
+import { query } from "@/lib/db"; // Ensure this function is properly set up for SQL queries
 import { NextResponse, NextRequest } from "next/server";
-
-export async function GET(req: NextRequest) {
-  const searchParams = req.nextUrl.searchParams;
-  const q = searchParams.get("query");
-  let results;
-
-  try {
-    if (q) {
-      results = await query("SELECT * FROM users WHERE name = $1", [q]);
-    } else {
-      results = await query("SELECT * FROM users");
-    }
-    return NextResponse.json(results.rows);
-  } catch (error) {
-    console.log(error);
-    return NextResponse.json(error);
-  }
-}
+import { v4 as uuidv4 } from "uuid"; // Only used for the image filename
+import { put } from "@vercel/blob";
 
 export async function POST(req: NextRequest) {
-  const { name } = await req.json();
   try {
-    const newUser = await query(
-      "INSERT INTO users (name) VALUES ($1) RETURNING *",
-      [name]
-    );
-    return NextResponse.json({ message: "User added", user: newUser.rows[0] });
-  } catch (error) {
-    return NextResponse.json(error);
-  }
-}
+    const formData = await req.formData();
+    const product_name = formData.get("product_name") as string;
+    const product_description = formData.get("product_description") as string;
+    const price = parseFloat(formData.get("price") as string);
+    const quantity = parseInt(formData.get("quantity") as string, 10);
+    const product_category = formData.get("product_category") as string;
+    const product_image = formData.get("product_image") as File;
 
-export async function PUT(req: NextRequest) {
-  const searchParams = req.nextUrl.searchParams;
-  const q = searchParams.get("query");
-  const { name } = await req.json()
-  try {
-    const updatedUser = await query(
-      "UPDATE users SET name = $1 WHERE name = $2 RETURNING *",
-      [name,q]
-    );
+    // Validate required fields
+    if (
+      !product_name ||
+      !product_description ||
+      isNaN(price) ||
+      isNaN(quantity) ||
+      !product_category
+    ) {
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 }
+      );
+    }
+
+    let imageUrl = null;
+    if (product_image instanceof File) {
+      try {
+        const imageUUID = uuidv4(); // Generate a unique filename
+        const fileExtension = product_image.name.split(".").pop(); // Get file extension
+        const uniqueFileName = `quick-cart/${imageUUID}.${fileExtension}`; // Use UUID for filename
+
+        const { url } = await put(uniqueFileName, product_image, {
+          access: "public",
+        });
+        imageUrl = url;
+      } catch (error) {
+        console.error("Image upload failed:", error);
+        return NextResponse.json(
+          { error: "Image upload failed" },
+          { status: 500 }
+        );
+      }
+    }
+
+    const insertQuery = `
+      INSERT INTO products (product_name, product_description, price, quantity, product_image, product_category)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING product_id;
+    `;
+
+    const result = await query(insertQuery, [
+      product_name,
+      product_description,
+      price,
+      quantity,
+      imageUrl,
+      product_category,
+    ]);
+
+    const product_id = result.rows[0].product_id; // Get the generated UUID from PostgreSQL
+
     return NextResponse.json({
-      message: "User updated",
-      user: updatedUser.rows[0],
+      success: true,
+      message: "Product added successfully",
+      product: {
+        product_id,
+        product_name,
+        product_description,
+        price,
+        quantity,
+        product_image: imageUrl,
+        product_category,
+      },
     });
   } catch (error) {
-    return NextResponse.json(error);
-  }
-}
-
-export async function DELETE(req: NextRequest) {
-  const searchParams = req.nextUrl.searchParams;
-  const q = searchParams.get("query");
-  try {
-    const deletedUser = await query(
-      "DELETE FROM users WHERE name = $1 RETURNING *",
-      [q]
+    console.error("Error adding product:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
     );
-    return NextResponse.json({
-      message: "User deleted",
-      user: deletedUser.rows[0],
-    });
-  } catch (error) {
-    return NextResponse.json(error);
   }
 }

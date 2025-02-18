@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import ProductOutput from "./ProductOutput";
 import { FaFileMedical } from "react-icons/fa";
 
@@ -11,6 +11,7 @@ export default function AdminForm() {
   const [quantity, setQuantity] = useState<number>(1);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [category, setCategory] = useState("")
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -18,6 +19,16 @@ export default function AdminForm() {
       setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
     }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("product_name", name)
+    formData.append("product_description", description)
+    formData.append("price", price.toString())
+    formData.append("quantity",quantity.toString())
+    formData.append("product_category", category)
   };
 
   return (

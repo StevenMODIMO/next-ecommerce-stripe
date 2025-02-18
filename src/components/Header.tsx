@@ -71,8 +71,11 @@ export default function Header() {
             </Link>
           ))}
         </div>
-        <Link href="/cart" className="text-2xl">
-          <IoCartOutline />
+        <Link href="/cart" className="relative">
+          <IoCartOutline className="text-2xl" />
+          <p className="absolute -top-1 -right-2 text-xs bg-[#E27210] rounded-full text-white w-4 h-4 tflex text-center">
+            0
+          </p>
         </Link>
         <div className="relative">
           <IoIosNotificationsOutline className="text-2xl" />
