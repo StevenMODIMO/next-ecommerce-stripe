@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import AdminHeader from "@/components/admin/AdminHeader";
 import AdminForm from "@/components/admin/AdminForm";
 import AdminCard from "@/components/admin/AdminCard";
 
@@ -12,7 +11,6 @@ export const metadata: Metadata = {
 export default function Admin() {
   return (
     <div>
-    <AdminHeader />
       <AdminCard>
         <AdminForm />
       </AdminCard>
