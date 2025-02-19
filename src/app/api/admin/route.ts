@@ -3,6 +3,16 @@ import { NextResponse, NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid"; // Only used for the image filename
 import { put } from "@vercel/blob";
 
+export async function GET(req: NextRequest) {
+  try {
+    const products = await query("SELECT * FROM products");
+    return NextResponse.json(products.rows);
+  } catch (error) {
+    return NextResponse.json(error);
+    console.log(error);
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -12,6 +22,7 @@ export async function POST(req: NextRequest) {
     const quantity = parseInt(formData.get("quantity") as string, 10);
     const product_category = formData.get("product_category") as string;
     const product_image = formData.get("product_image") as File;
+    const large_image = formData.get("large_image") as File;
 
     // Validate required fields
     if (
@@ -28,6 +39,8 @@ export async function POST(req: NextRequest) {
     }
 
     let imageUrl = null;
+    let largeImage = null;
+
     if (product_image instanceof File) {
       try {
         const imageUUID = uuidv4(); // Generate a unique filename
@@ -47,9 +60,28 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    if (large_image instanceof File) {
+      try {
+        const imageUUID = uuidv4(); // Generate a unique filename
+        const fileExtension = large_image.name.split(".").pop(); // Get file extension
+        const uniqueFileName = `quick-cart-large/${imageUUID}.${fileExtension}`; // Use UUID for filename
+
+        const { url } = await put(uniqueFileName, large_image, {
+          access: "public",
+        });
+        largeImage = url;
+      } catch (error) {
+        console.error("Image upload failed:", error);
+        return NextResponse.json(
+          { error: "Image upload failed" },
+          { status: 500 }
+        );
+      }
+    }
+
     const insertQuery = `
-      INSERT INTO products (product_name, product_description, price, quantity, product_image, product_category)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO products (product_name, product_description, price, quantity, product_image, product_category, large_image)
+      VALUES ($1, $2, $3, $4, $5, $6,$7)
       RETURNING product_id;
     `;
 
@@ -60,6 +92,7 @@ export async function POST(req: NextRequest) {
       quantity,
       imageUrl,
       product_category,
+      largeImage,
     ]);
 
     const product_id = result.rows[0].product_id; // Get the generated UUID from PostgreSQL
@@ -75,6 +108,7 @@ export async function POST(req: NextRequest) {
         quantity,
         product_image: imageUrl,
         product_category,
+        large_image: largeImage,
       },
     });
   } catch (error) {

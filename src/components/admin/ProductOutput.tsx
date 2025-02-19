@@ -6,7 +6,8 @@ interface ProductProps {
   price: number;
   quantity: number;
   image: string | null;
-  category: string
+  category: string;
+  largeImage: string | null;
 }
 
 export default function ProductOutput({
@@ -15,16 +16,26 @@ export default function ProductOutput({
   price,
   quantity,
   image,
-  category
+  category,
+  largeImage,
 }: ProductProps) {
   return (
     <div className="p-3 rounded-bl rounded-tr text-gray-400 border shadow flex flex-col gap-2 w-96">
+      {largeImage && (
+        <div className="w-full flex justify-center">
+          <img
+            src={largeImage}
+            alt="Product Preview"
+            className="object-contain w-[1200px] rounded-md"
+          />
+        </div>
+      )}
       {image && (
         <div className="w-full h-48 flex justify-center">
           <img
             src={image}
             alt="Product Preview"
-            className="object-contain max-h-full rounded-md"
+            className="object-contain w-[400px] rounded-md"
           />
         </div>
       )}

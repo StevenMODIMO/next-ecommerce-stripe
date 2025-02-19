@@ -19,6 +19,8 @@ export default function AdminForm() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [category, setCategory] = useState("gaming");
   const [error, setError] = useState<string | null>("");
+  const [largeImage, setLargeImage] = useState<File | null>(null);
+  const [largePreview, setLargePreview] = useState<string | null>(null);
 
   const categories: Categories[] = [
     {
@@ -81,6 +83,14 @@ export default function AdminForm() {
     }
   };
 
+  const handleLargeImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setLargeImage(file);
+      setLargePreview(URL.createObjectURL(file));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();
@@ -90,6 +100,7 @@ export default function AdminForm() {
     formData.append("quantity", quantity.toString());
     formData.append("product_category", category);
     formData.append("product_image", imageFile as Blob);
+    formData.append("large_image", largeImage as Blob);
 
     const response = await fetch("/api/admin", {
       method: "POST",
@@ -107,8 +118,12 @@ export default function AdminForm() {
       setError(null);
       setImageFile(null);
       setImagePreview(null);
-      console.log(json)
+      console.log(json);
+      setLargeImage(null);
+      setLargePreview(null);
     } else {
+      setLargeImage(null);
+      setLargePreview(null);
       console.log(json.error);
       setError(json.error);
       setName("");
@@ -133,6 +148,16 @@ export default function AdminForm() {
             {error}
           </div>
         )}
+        <label className="flex flex-col items-center gap-2 cursor-pointer">
+          <FaFileMedical size={24} />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleLargeImageUpload}
+            className="hidden"
+          />
+          <p className="text-sm">Upload Large Image</p>
+        </label>
         <label className="flex flex-col items-center gap-2 cursor-pointer">
           <FaFileMedical size={24} />
           <input
@@ -219,6 +244,7 @@ export default function AdminForm() {
         quantity={quantity}
         image={imagePreview}
         category={category}
+        largeImage={largePreview}
       />
     </div>
   );
