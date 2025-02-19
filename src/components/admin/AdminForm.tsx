@@ -1,5 +1,11 @@
 "use client";
 
+interface Categories {
+  id: number;
+  value: string;
+  name: string;
+}
+
 import React, { useState } from "react";
 import ProductOutput from "./ProductOutput";
 import { FaFileMedical } from "react-icons/fa";
@@ -11,7 +17,61 @@ export default function AdminForm() {
   const [quantity, setQuantity] = useState<number>(1);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [category, setCategory] = useState("")
+  const [category, setCategory] = useState("gaming");
+  const [error, setError] = useState<string | null>("");
+
+  const categories: Categories[] = [
+    {
+      id: 1,
+      value: "gaming",
+      name: "Gaming",
+    },
+    {
+      id: 2,
+      value: "fashion",
+      name: "Fashion",
+    },
+    {
+      id: 3,
+      value: "grocery",
+      name: "Grocery",
+    },
+    {
+      id: 4,
+      value: "televison",
+      name: "Television",
+    },
+    {
+      id: 5,
+      value: "camera",
+      name: "Camera",
+    },
+    {
+      id: 6,
+      value: "automotive",
+      name: "Automotive",
+    },
+    {
+      id: 7,
+      value: "books",
+      name: "Books & Stationery",
+    },
+    {
+      id: 8,
+      value: "travel",
+      name: "Travel & Luggage",
+    },
+    {
+      id: 9,
+      value: "furniture",
+      name: "Furniture",
+    },
+    {
+      id: 10,
+      value: "watches",
+      name: "Watches",
+    },
+  ];
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -24,16 +84,55 @@ export default function AdminForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("product_name", name)
-    formData.append("product_description", description)
-    formData.append("price", price.toString())
-    formData.append("quantity",quantity.toString())
-    formData.append("product_category", category)
+    formData.append("product_name", name);
+    formData.append("product_description", description);
+    formData.append("price", price.toString());
+    formData.append("quantity", quantity.toString());
+    formData.append("product_category", category);
+    formData.append("product_image", imageFile as Blob);
+
+    const response = await fetch("/api/admin", {
+      method: "POST",
+      body: formData,
+    });
+
+    const json = await response.json();
+
+    if (response.ok) {
+      setName("");
+      setDescription("");
+      setPrice(1);
+      setQuantity(1);
+      setCategory("gaming");
+      setError(null);
+      setImageFile(null);
+      setImagePreview(null);
+      console.log(json)
+    } else {
+      console.log(json.error);
+      setError(json.error);
+      setName("");
+      setDescription("");
+      setPrice(1);
+      setQuantity(1);
+      setCategory("gaming");
+      setImageFile(null);
+      setImagePreview(null);
+    }
   };
 
   return (
     <div className="flex gap-3 items-center justify-center">
-      <form className="flex flex-col gap-3 text-gray-400 p-4 rounded-md">
+      <form
+        className="flex flex-col text-gray-400 p-4 rounded-md"
+        onSubmit={handleSubmit}
+        onFocus={() => setError(null)}
+      >
+        {error && (
+          <div className="bg-red-400 rounded-md p-2 w-fit mx-auto text-white font-semibold">
+            {error}
+          </div>
+        )}
         <label className="flex flex-col items-center gap-2 cursor-pointer">
           <FaFileMedical size={24} />
           <input
@@ -90,10 +189,24 @@ export default function AdminForm() {
             placeholder="Enter product quantity"
           />
         </label>
+        <label>
+          <p>Product Category:</p>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="p-2 outline-none rounded border border-[#E27210]"
+          >
+            {categories.map(({ id, value, name }) => (
+              <option value={value} key={id} className="rounded border-none">
+                {name}
+              </option>
+            ))}
+          </select>
+        </label>
 
         <button
           type="submit"
-          className="text-white bg-[#E27210] w-fit mx-auto p-2 rounded-tr rounded-bl"
+          className="text-white mt-2 bg-[#E27210] w-fit mx-auto p-2 rounded-tr rounded-bl"
         >
           Add product
         </button>
@@ -105,6 +218,7 @@ export default function AdminForm() {
         price={price}
         quantity={quantity}
         image={imagePreview}
+        category={category}
       />
     </div>
   );

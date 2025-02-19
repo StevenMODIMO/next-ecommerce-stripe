@@ -6,6 +6,7 @@ interface ProductProps {
   price: number;
   quantity: number;
   image: string | null;
+  category: string
 }
 
 export default function ProductOutput({
@@ -14,6 +15,7 @@ export default function ProductOutput({
   price,
   quantity,
   image,
+  category
 }: ProductProps) {
   return (
     <div className="p-3 rounded-bl rounded-tr text-gray-400 border shadow flex flex-col gap-2 w-96">
@@ -34,6 +36,7 @@ export default function ProductOutput({
         <p>Starting at: ${price}</p>
         <p>Available: {quantity}</p>
       </div>
+      <p>You selected category of: {category}</p>
     </div>
   );
 }
