@@ -21,6 +21,7 @@ export default function AdminForm() {
   const [error, setError] = useState<string | null>("");
   const [largeImage, setLargeImage] = useState<File | null>(null);
   const [largePreview, setLargePreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const categories: Categories[] = [
     {
@@ -93,6 +94,7 @@ export default function AdminForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     formData.append("product_name", name);
     formData.append("product_description", description);
@@ -121,6 +123,7 @@ export default function AdminForm() {
       console.log(json);
       setLargeImage(null);
       setLargePreview(null);
+      setLoading(false);
     } else {
       setLargeImage(null);
       setLargePreview(null);
@@ -133,6 +136,7 @@ export default function AdminForm() {
       setCategory("gaming");
       setImageFile(null);
       setImagePreview(null);
+      setLoading(false);
     }
   };
 
@@ -233,9 +237,13 @@ export default function AdminForm() {
           type="submit"
           className="text-white mt-2 bg-[#E27210] w-fit mx-auto p-2 rounded-tr rounded-bl"
         >
-          Add product
+          {loading ? "Please wait ...." : "Add product"}
         </button>
       </form>
+
+      <div className="fixed top-0 left-[50%] rounded-md p-2 bg-green-500 text-white font-semibold">
+        Alert Message
+      </div>
 
       <ProductOutput
         name={name}
