@@ -42,7 +42,7 @@ export default function AdminForm() {
     },
     {
       id: 4,
-      value: "televison",
+      value: "television",
       name: "Television",
     },
     {
