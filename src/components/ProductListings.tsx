@@ -7,12 +7,18 @@ interface Products {
   price: string;
   quantity: string;
 }
-
+import { notFound } from "next/navigation";
 import Image from "next/image";
 
 export default async function ProductListings() {
-  const response = await fetch("http://localhost:3000/api/products");
+  const response = await fetch(`${process.env.BASE_URL}/api/products`, {
+    cache: "no-store",
+  });
   const data = await response.json();
+
+  if (response.status == 404) {
+    notFound();
+  }
 
   const products: Products[] = data;
   return (
