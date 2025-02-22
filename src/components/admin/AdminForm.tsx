@@ -22,6 +22,7 @@ export default function AdminForm() {
   const [largeImage, setLargeImage] = useState<File | null>(null);
   const [largePreview, setLargePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>("");
 
   const categories: Categories[] = [
     {
@@ -120,7 +121,7 @@ export default function AdminForm() {
       setError(null);
       setImageFile(null);
       setImagePreview(null);
-      console.log(json);
+      setMessage(json.message);
       setLargeImage(null);
       setLargePreview(null);
       setLoading(false);
@@ -137,6 +138,7 @@ export default function AdminForm() {
       setImageFile(null);
       setImagePreview(null);
       setLoading(false);
+      setMessage(null);
     }
   };
 
@@ -241,10 +243,11 @@ export default function AdminForm() {
         </button>
       </form>
 
-      <div className="fixed top-0 left-[50%] rounded-md p-2 bg-green-500 text-white font-semibold">
-        Alert Message
-      </div>
-
+      {message && (
+        <div className="fixed top-0 left-[50%] rounded-md p-2 bg-green-500 text-white font-semibold">
+          Alert Message
+        </div>
+      )}
       <ProductOutput
         name={name}
         description={description}
