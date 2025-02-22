@@ -1,14 +1,22 @@
 import { Pool } from "pg";
 
 const pool = new Pool({
-  user: process.env.PG_USER as string,
-  host: process.env.PG_HOST as string,
-  database: process.env.PG_DATABASE as string,
-  password: process.env.PG_PASSWORD as string,
-  port: process.env.PG_PORT ? parseInt(process.env.PG_PORT, 10) : 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl:
+    process.env.NODE_ENV === "production"
+      ? { rejectUnauthorized: false }
+      : false,
 });
 
 export const query = async (text: string, params?: any[]) => {
-  const res = await pool.query(text, params);
-  return res;
+  const client = await pool.connect();
+  try {
+    const res = await client.query(text, params);
+    return res;
+  } catch (error) {
+    console.error("Database query error:", error);
+    throw new Error("Database query failed");
+  } finally {
+    client.release();
+  }
 };

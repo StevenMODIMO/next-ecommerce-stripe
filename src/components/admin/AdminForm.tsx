@@ -147,7 +147,10 @@ export default function AdminForm() {
       <form
         className="flex flex-col text-gray-400 p-4 rounded-md"
         onSubmit={handleSubmit}
-        onFocus={() => setError(null)}
+        onFocus={() => {
+          setError(null);
+          setMessage(null);
+        }}
       >
         {error && (
           <div className="bg-red-400 rounded-md p-2 w-fit mx-auto text-white font-semibold">
@@ -245,7 +248,7 @@ export default function AdminForm() {
 
       {message && (
         <div className="fixed top-0 left-[50%] rounded-md p-2 bg-green-500 text-white font-semibold">
-          Alert Message
+          {message}
         </div>
       )}
       <ProductOutput
