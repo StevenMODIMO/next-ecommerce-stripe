@@ -12,7 +12,7 @@ import {
   FaPaypal,
   FaCcMastercard,
   FaGooglePay,
-  FaApplePay
+  FaApplePay,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
@@ -96,7 +96,7 @@ export default function Footer() {
         <FaPaypal />
         <FaCcMastercard />
         <FaGooglePay />
-<FaApplePay />
+        <FaApplePay />
       </section>
     </footer>
   );
