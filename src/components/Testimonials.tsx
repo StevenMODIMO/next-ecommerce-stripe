@@ -89,7 +89,7 @@ export default function Testimonials() {
               <p className="text-gray-700 font-medium text-lg mt-2">
                 {testimonials[currentIndex].name}
               </p>
-              <p className="font-semibold text-sm text-[#E27210]">
+              <p className="font-bold text-sm text-[#E27210]">
                 {testimonials[currentIndex].title}
               </p>
               <p className="text-gray-600 text-sm mt-3">
@@ -110,7 +110,7 @@ export default function Testimonials() {
                   />
                   <div>
                     <p className="text-gray-700 font-medium text-lg">{name}</p>
-                    <p className="font-semibold text-sm text-[#E27210]">
+                    <p className="font-bold text-sm text-[#E27210]">
                       {title}
                     </p>
                   </div>
