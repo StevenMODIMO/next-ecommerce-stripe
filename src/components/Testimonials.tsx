@@ -32,7 +32,7 @@ export default function Testimonials() {
   };
 
   return (
-    <div className="w-full py-16 min-h-[60vh] bg-gray-50" id="testimonials">
+    <div className="w-full py-16 min-h-[60vh] bg-gray-100" id="testimonials">
       <div className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-16">
         <div className="flex items-center justify-between mb-6 sm:hidden">
           <header>

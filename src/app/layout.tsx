@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${nunito.className} bg-white`}>
         <Header />
-        <div className="pt-16">
+        <div>
           <ProgressBarProvider>
             {children}
             {cartModal}
