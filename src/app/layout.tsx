@@ -21,9 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${nunito.className}`}>
+      <body className={`${nunito.className} bg-white`}>
         <Header />
-        <div className="mx-4 h-screen pt-16">
+        <div className="pt-16">
           <ProgressBarProvider>
             {children}
             {cartModal}

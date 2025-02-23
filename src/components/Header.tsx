@@ -14,6 +14,7 @@ import MobileNav from "@/components/MobileNav";
 import { useState } from "react";
 import { navLinks } from "@/components/MobileNav";
 import { TbPhoneCall, TbShoppingCartBolt } from "react-icons/tb";
+import { CgDarkMode } from "react-icons/cg";
 import {
   MdOutlineFeaturedPlayList,
   MdMotionPhotosPaused,
@@ -23,7 +24,7 @@ import { BiSolidLogIn } from "react-icons/bi";
 export default function Header() {
   const [showLinks, setShowLinks] = useState(false);
   return (
-    <nav className="fixed left-0 top-0 w-full flex justify-between p-3 mt-1 shadow z-9999 text-gray-700">
+    <nav className="fixed left-0 top-0 w-full flex justify-between p-3 shadow z-9999 text-gray-700 bg-white">
       <header className="relative w-96">
         <Link href="/">
           <Image

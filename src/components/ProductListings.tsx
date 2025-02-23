@@ -22,17 +22,12 @@ export default async function ProductListings() {
 
   const products: Products[] = data;
   return (
-    <div>
+    <div className="bg-gray-50 max-w-7xl mx-auto rounded-md shadow lg:mx-16">
       <header>
         <h1>Products</h1>
-        <ul>
+        <ul className="lg:grid lg:grid-cols-5 gap-4">
           {products.map((product) => (
             <li key={product.product_id}>
-              <h2>{product.product_name}</h2>
-              <p>{product.product_description}</p>
-              <p>{product.product_category}</p>
-              <p>{product.price}</p>
-              <p>{product.quantity}</p>
               <Image
                 src={product.product_image}
                 alt={product.product_name}
