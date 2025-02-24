@@ -24,7 +24,7 @@ import { BiSolidLogIn } from "react-icons/bi";
 export default function Header() {
   const [showLinks, setShowLinks] = useState(false);
   return (
-    <nav className="fixed left-0 top-0 w-full flex justify-between p-3 shadow z-[10000] sm:z-9999 text-gray-700 bg-white">
+    <nav className="fixed left-0 top-0 w-full flex justify-between p-3 z-[10000] sm:z-9999 text-gray-700 bg-white">
       <header className="relative w-96">
         <Link href="/">
           <Image

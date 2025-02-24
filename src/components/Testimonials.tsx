@@ -36,7 +36,7 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-16">
         <div className="flex items-center justify-between mb-6 sm:hidden">
           <header>
-          <div className="my-2 h-[2px] w-12 rounded-md bg-[#E27210]"></div>
+            <div className="my-2 h-[2px] w-12 rounded-md bg-[#E27210]"></div>
             <div className="text-sm text-gray-500 flex items-center gap-2 lg:text-lg lg:font-semibold">
               <TbUsersGroup className="text-[#E27210]" />
               <p>Testimonials</p>
@@ -74,8 +74,8 @@ export default function Testimonials() {
           {/* Mobile Slider */}
           <div className="relative overflow-hidden sm:hidden">
             <motion.div
-              key={currentIndex} 
-              initial={{ x: direction * 100, opacity: 0 }} 
+              key={currentIndex}
+              initial={{ x: direction * 100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -direction * 100, opacity: 0 }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
@@ -101,7 +101,10 @@ export default function Testimonials() {
           {/* Tablet & Desktop Grid */}
           <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {testimonials.map(({ id, name, description, title }, index) => (
-              <div key={id} className="bg-white p-6 rounded">
+              <div
+                key={id}
+                className="bg-white p-6 rounded transition-transform duration-200 ease-in-out hover:scale-110 hover:drop-shadow-2xl cursor-pointer"
+              >
                 <header className="flex items-center gap-4">
                   <img
                     src={images[index].src}
@@ -110,9 +113,7 @@ export default function Testimonials() {
                   />
                   <div>
                     <p className="text-gray-700 font-medium text-lg">{name}</p>
-                    <p className="font-bold text-sm text-[#E27210]">
-                      {title}
-                    </p>
+                    <p className="font-bold text-sm text-[#E27210]">{title}</p>
                   </div>
                 </header>
                 <p className="text-gray-600 text-sm mt-4">{description}</p>

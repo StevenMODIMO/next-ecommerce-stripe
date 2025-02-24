@@ -21,7 +21,7 @@ import { IoMdLink } from "react-icons/io";
 export default function Footer() {
   return (
     <footer className="pb-16 w-full">
-      <div className="max-w-7xl px-4 flex flex-col gap-8 sm:px-12 lg:px-16">
+      <div className="max-w-7xl mx-auto px-4 flex flex-col gap-8 sm:grid sm:grid-cols-2 md:grid-cols-3 sm:px-12 lg:px-16">
         <section>
           <header className="flex gap-2 items-center text-[#E27210] my-4">
             <TbHelpHexagon className="text-2xl" />
@@ -83,20 +83,22 @@ export default function Footer() {
             </li>
             <li className="flex items-center gap-2 text-gray-700 font-medium">
               <FaApple />
-              <span>App Store</span>
+              <span>Apple Store</span>
             </li>
           </ul>
         </section>
       </div>
-      <p className="text-center text-gray-800 font-medium mt-4 text-sm">
-        &copy; Quick Cart {new Date().getFullYear()} All rights reserved.
-      </p>
-      <section className="flex items-center gap-4 jusitfy-center">
-        <FaCcVisa />
-        <FaPaypal />
-        <FaCcMastercard />
-        <FaGooglePay />
-        <FaApplePay />
+      <section className="max-w-7xl px-4 flex flex-col gap-8 md:mt-8 sm:px-12 lg:px-16">
+        <p className="text-center text-gray-800 font-medium mt-4 text-sm">
+          &copy; Quick Cart {new Date().getFullYear()} All rights reserved.
+        </p>
+        <section className="flex gap-2 itemms-center justify-center">
+          <FaCcVisa className="text-2xl" />
+          <FaPaypal className="text-2xl" />
+          <FaCcMastercard className="text-2xl" />
+          <FaGooglePay className="text-2xl" />
+          <FaApplePay className="text-2xl" />
+        </section>
       </section>
     </footer>
   );

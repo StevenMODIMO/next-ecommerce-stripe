@@ -4,10 +4,12 @@ import Testimonials from "@/components/Testimonials";
 import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 import NewsLetter from "@/components/NewsLetter";
+import CategoryListings from "@/components/CategoryListings";
 
 export default async function Home() {
   return (
     <div>
+      <CategoryListings />
       <ScrollToTop />
       <Features />
       <Testimonials />
