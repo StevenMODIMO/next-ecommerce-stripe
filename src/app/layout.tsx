@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description: "Nextjs ecommerce web app + Stripejs payment gateway.",
 };
 
-
 const nunito = Nunito({ subsets: ["latin"] });
 
 export default function RootLayout({
@@ -23,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${nunito.className} bg-white`}>
         <Header />
-        <div>
+        <div className="pt-[60px]">
           <ProgressBarProvider>
             {children}
             {cartModal}

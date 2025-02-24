@@ -15,7 +15,7 @@ export default function Modal({ children }: ModalProps) {
   return (
     <AnimatePresence>
       <div
-        className="bg-black/10 fixed inset-0 flex justify-end"
+        className="bg-black/10 fixed inset-0 flex justify-end z-[100]" // Ensure cart modal is above everything
         onClick={() => router.back()}
       >
         <motion.div
