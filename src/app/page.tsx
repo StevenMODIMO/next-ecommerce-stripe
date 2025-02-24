@@ -5,6 +5,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 import NewsLetter from "@/components/NewsLetter";
 import CategoryListings from "@/components/CategoryListings";
+import Contact from "@/components/Contact"
 
 export default async function Home() {
   return (
@@ -14,6 +15,7 @@ export default async function Home() {
       <Features />
       <Testimonials />
       <NewsLetter />
+      <Contact />
       <Footer />
     </div>
   );
