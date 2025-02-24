@@ -5,20 +5,15 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 import NewsLetter from "@/components/NewsLetter";
 import CategoryListings from "@/components/CategoryListings";
-import Contact from "@/components/Contact"
-import Banner from "@/components/Banner"
-import Loading from "./loading"
-import { Suspense} from "react"
+import Contact from "@/components/Contact";
+import Banner from "@/components/Banner";
 
 export default async function Home() {
   return (
     <div>
-      {/* <Suspense fallback={<Loading />}>
-        <ProductListings />
-      </Suspense> */}
-      <CategoryListings />
-      <Loading />
       <Banner />
+      <CategoryListings />
+      <ProductListings />
       <ScrollToTop />
       <Features />
       <Testimonials />

@@ -4,7 +4,7 @@ import { MdStarRate } from "react-icons/md";
 
 export default function Loading() {
   return (
-    <div className="min-h-[60vh] py-12">
+    <div className="min-h-[60vh] w-full py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-16 animate-pulse">
         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {[...Array(1)].map((_, i) => (
