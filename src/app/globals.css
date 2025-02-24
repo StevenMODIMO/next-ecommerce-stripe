@@ -2,4 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/**E27210 */
+html {
+  scroll-behavior: smooth;
+}

@@ -14,7 +14,7 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-16">
         <header className="mb-8">
           <div className="w-12 h-[2px] bg-[#E27210]"></div>
-          <div className="mt-2 text-lg font-semibold text-gray-700 flex items-center gap-2">
+          <div className="mt-2 text-lg font-semibold text-gray-800 flex items-center gap-2 lg:text-xl">
             <MdOutlineFeaturedPlayList className="text-[#E27210] text-xl" />
             <p>Contact Us</p>
           </div>
