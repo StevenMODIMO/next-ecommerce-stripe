@@ -14,12 +14,12 @@ import MobileNav from "@/components/MobileNav";
 import { useState } from "react";
 import { navLinks } from "@/components/MobileNav";
 import { TbPhoneCall, TbShoppingCartBolt } from "react-icons/tb";
-import { CgDarkMode } from "react-icons/cg";
 import {
   MdOutlineFeaturedPlayList,
   MdMotionPhotosPaused,
 } from "react-icons/md";
 import { BiSolidLogIn } from "react-icons/bi";
+import { AnimatePresence } from "motion/react";
 
 export default function Header() {
   const [showLinks, setShowLinks] = useState(false);
@@ -45,7 +45,7 @@ export default function Header() {
             placeholder="Search Products ..."
           />
         </label>
-        <div className="hidden md:flex md:gap-3 lg:mr-6">
+        <div className="hidden lg:flex lg:gap-3 lg:mr-6">
           {navLinks.map(({ id, name, path }) => (
             <Link
               className="text-sm flex items-center gap-2 lg:text-[15px] hover:border-b-2 hover:border-[#E27210] transition-all duration-75 ease-in-out"
@@ -93,11 +93,13 @@ export default function Header() {
         <div>
           <MdOutlineAccountCircle className="text-2xl" />
         </div>
-        <div onClick={() => setShowLinks(!showLinks)} className="md:hidden">
-          {!showLinks ? <FaBars /> : <FaTimes />}
+        <div onClick={() => setShowLinks(true)} className="lg:hidden">
+          <FaBars className="text-2xl" />
         </div>
       </div>
-      {showLinks && <MobileNav setShowLinks={setShowLinks} />}
+      <AnimatePresence>
+        {showLinks && <MobileNav setShowLinks={setShowLinks} />}
+      </AnimatePresence>
     </nav>
   );
 }

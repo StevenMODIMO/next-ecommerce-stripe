@@ -9,6 +9,7 @@ import {
   MdOutlineNewLabel,
 } from "react-icons/md";
 import { BiSolidLogIn } from "react-icons/bi";
+import { FaTimes } from "react-icons/fa";
 
 interface PropTypes {
   setShowLinks: React.Dispatch<React.SetStateAction<boolean>>;
@@ -56,32 +57,35 @@ export const navLinks: LinkTypes[] = [
 export default function MobileNav({ setShowLinks }: PropTypes) {
   return (
     <motion.div
-      initial={{ y: -1200 }}
-      animate={{ y: 0 }}
-      exit={{ y: -1200 }}
-      transition={{ duration: 0.5, ease: [0, 0.71, 0.2, 1.01] }}
-      className="absolute top-12 left-0 p-2 bg-gray-100/90 w-full sm:w-[50%] sm:p-2 sm:left-[50%] md:hidden"
+      initial={{ x: -1200 }}
+      animate={{ x: 0 }}
+      exit={{ x: -1200 }}
+      transition={{ duration: 0.3 }}
+      className="absolute top-0 left-0 p-4 bg-white w-full h-screen lg:hidden"
     >
+      <div className="flex justify-end" onClick={() => setShowLinks(false)}>
+        <FaTimes className="text-2xl" />
+      </div>
       <div className="flex flex-col gap-4">
         {navLinks.map(({ id, name, path }) => (
           <Link
-            className="text-sm flex items-center gap-2"
+            className="text-lg flex items-center gap-3 font-medum text-gray-700"
             onClick={() => setShowLinks(false)}
             key={id}
             href={path}
           >
             {name === "Contact" ? (
-              <TbPhoneCall />
+              <TbPhoneCall className="text-2xl" />
             ) : name === "Features" ? (
-              <MdOutlineFeaturedPlayList />
+              <MdOutlineFeaturedPlayList className="text-2xl" />
             ) : name === "Testimonials" ? (
-              <MdMotionPhotosPaused />
+              <MdMotionPhotosPaused className="text-2xl" />
             ) : name === "Shop" ? (
-              <TbShoppingCartBolt />
+              <TbShoppingCartBolt className="text-2xl" />
             ) : name === "SignUp" ? (
-              <MdOutlineNewLabel />
+              <MdOutlineNewLabel className="text-2xl" />
             ) : name === "SignIn" ? (
-              <BiSolidLogIn />
+              <BiSolidLogIn className="text-2xl" />
             ) : (
               ""
             )}
