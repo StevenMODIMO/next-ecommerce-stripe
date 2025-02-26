@@ -1,6 +1,16 @@
 "use client";
 
-interface Products {
+import { useState, useEffect } from "react";
+import {
+  MdOutlineArrowBackIos,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
+import { FaBinoculars } from "react-icons/fa";
+import Loading from "@/app/loading";
+import Link from "next/link";
+import { motion } from "motion/react"; // Import framer-motion
+
+interface Product {
   product_id: number;
   product_name: string;
   product_description: string;
@@ -9,33 +19,55 @@ interface Products {
   price: string;
   quantity: string;
 }
-import Loading from "@/app/loading";
-import { Suspense } from "react";
-import { useState, useEffect } from "react";
-import {
-  MdOutlineArrowBackIos,
-  MdOutlineArrowForwardIos,
-} from "react-icons/md";
-import { FaBinoculars } from "react-icons/fa";
 
 export default function ProductListings() {
-  const [products, setProducts] = useState<Products | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [itemsToShow, setItemsToShow] = useState(1);
 
   useEffect(() => {
     const getProducts = async () => {
-      const response = await fetch("/api/products");
-      const json = await response.json();
-
-      if (response.ok) {
-        console.log(json);
-      } else {
-        console.log(json);
+      try {
+        const response = await fetch("/api/products");
+        const json = await response.json();
+        if (response.ok) {
+          setProducts(json);
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
       }
     };
     getProducts();
   }, []);
+
+  useEffect(() => {
+    const updateItemsToShow = () => {
+      if (window.innerWidth < 640) {
+        setItemsToShow(1);
+      } else if (window.innerWidth < 1024) {
+        setItemsToShow(3);
+      } else {
+        setItemsToShow(5);
+      }
+    };
+    updateItemsToShow();
+    window.addEventListener("resize", updateItemsToShow);
+    return () => window.removeEventListener("resize", updateItemsToShow);
+  }, []);
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + itemsToShow) % products.length);
+  };
+
+  const handlePrevious = () => {
+    setCurrentIndex(
+      (prevIndex) =>
+        (prevIndex - itemsToShow + products.length) % products.length
+    );
+  };
+
   return (
-    <div className="w-full">
+    <div className="w-full min-h-[60vh] py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-16">
         <header>
           <div className="my-2 h-[2px] w-12 rounded-md bg-[#E27210]"></div>
@@ -45,21 +77,70 @@ export default function ProductListings() {
               <p>Quick Overview</p>
             </div>
             <div className="flex items-center gap-3">
-              <div className="p-1 rounded-full bg-[#E27210]">
+              <button
+                onClick={handlePrevious}
+                className="p-1 rounded-full bg-[#E27210] hover:bg-[#c85c0a] transition"
+              >
                 <MdOutlineArrowBackIos className="text-white" />
-              </div>
-              <div className="p-1 rounded-full bg-[#E27210]">
+              </button>
+              <button
+                onClick={handleNext}
+                className="p-1 rounded-full bg-[#E27210] hover:bg-[#c85c0a] transition"
+              >
                 <MdOutlineArrowForwardIos className="text-white" />
-              </div>
+              </button>
             </div>
           </div>
-          <p className="text-lg font-semibold text-gray-800">
+          <p className="text-lg font-semibold text-gray-800 lg:text-2xl">
             Get the most from our categories
           </p>
         </header>
-        {/* <Suspense fallback={<Loading />}> */}
-        <Loading />
-        {/* </Suspense> */}
+        {products.length === 0 ? (
+          <Loading />
+        ) : (
+          <div className="mt-6 flex gap-4 overflow-hidden">
+            {products
+              .slice(currentIndex, currentIndex + itemsToShow)
+              .concat(
+                products.slice(
+                  0,
+                  Math.max(0, currentIndex + itemsToShow - products.length)
+                )
+              )
+              .map((product) => (
+                <motion.div
+                  key={product.product_id}
+                  className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center w-full sm:w-[30%] lg:w-[18%]"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Link
+                    href={`/products/${product.product_name
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}`}
+                    className="block"
+                  >
+                    <img
+                      src={product.product_image}
+                      alt={product.product_name}
+                      className="w-full h-32 object-cover rounded-md"
+                    />
+                    <h3 className="text-md font-semibold mt-2 text-gray-800">
+                      {product.product_name}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {product.product_category}
+                    </p>
+                    <p className="text-lg font-bold text-[#E27210]">
+                      ${product.price}
+                    </p>
+                  </Link>
+                </motion.div>
+              ))}
+          </div>
+        )}
       </div>
     </div>
   );
