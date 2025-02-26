@@ -14,9 +14,11 @@ const nunito = Nunito({ subsets: ["latin"] });
 export default function RootLayout({
   children,
   cartModal,
+  productModal
 }: Readonly<{
   children: React.ReactNode;
   cartModal: React.ReactNode;
+  productModal: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -26,6 +28,7 @@ export default function RootLayout({
           <ProgressBarProvider>
             {children}
             {cartModal}
+            {productModal}
           </ProgressBarProvider>
         </div>
       </body>

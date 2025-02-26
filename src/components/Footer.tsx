@@ -20,7 +20,7 @@ import { IoMdLink } from "react-icons/io";
 
 export default function Footer() {
   return (
-    <footer className="pb-16 w-full">
+    <footer className="pb-8 w-full">
       <div className="max-w-7xl mx-auto px-4 flex flex-col gap-8 sm:grid sm:grid-cols-2 md:grid-cols-3 sm:px-12 lg:px-16">
         <section>
           <header className="flex gap-2 items-center text-[#E27210] my-4">

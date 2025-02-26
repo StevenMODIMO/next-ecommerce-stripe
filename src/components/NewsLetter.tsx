@@ -5,7 +5,7 @@ import { FaHourglass } from "react-icons/fa";
 
 const NewsLetter: React.FC = () => {
   return (
-    <div className="px-4 max-w-7xl mx-auto rounded py-16 text-white sm:px-12 lg:px-16">
+    <div className="px-4 max-w-7xl mx-auto rounded py-8 text-white sm:px-12 lg:px-16">
       <div className="bg-gradient-to-r from-[#e27210] to-[#ff9e49] p-6 rounded shadow-lg flex flex-col gap-6 sm:p-12 lg:flex-row lg:items-center lg:justify-between">
         <header className="flex flex-col gap-3 lg:w-1/2">
           <div className="flex gap-2 items-center">

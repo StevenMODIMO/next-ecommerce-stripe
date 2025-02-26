@@ -25,7 +25,7 @@ export default function CategoryListings() {
   ];
 
   return (
-    <div className="w-full py-16 bg-gray-100">
+    <div className="w-full py-8 bg-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-16">
         <header>
           <div className="my-2 h-[2px] w-12 rounded-md bg-[#E27210]"></div>

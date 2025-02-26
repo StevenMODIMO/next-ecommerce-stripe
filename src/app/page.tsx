@@ -12,8 +12,8 @@ export default async function Home() {
   return (
     <div>
       <Banner />
-      <CategoryListings />
       <ProductListings />
+      <CategoryListings />
       <ScrollToTop />
       <Features />
       <Testimonials />

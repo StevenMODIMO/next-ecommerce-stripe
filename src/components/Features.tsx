@@ -11,7 +11,7 @@ import { FaSearchengin } from "react-icons/fa";
 
 export default function Features() {
   return (
-    <div className="w-full py-16 min-h-[60vh]" id="features">
+    <div className="w-full py-8 min-h-[60vh]" id="features">
       <div className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-16">
         <header>
           <div className="my-2 h-[1.5px] w-12 rounded-md bg-[#E27210]"></div>
