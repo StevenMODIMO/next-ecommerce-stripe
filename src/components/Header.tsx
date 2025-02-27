@@ -11,7 +11,7 @@ import { MdOutlineAccountCircle, MdOutlineNewLabel } from "react-icons/md";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Link from "next/link";
 import MobileNav from "@/components/MobileNav";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { navLinks } from "@/components/MobileNav";
 import { TbPhoneCall, TbShoppingCartBolt } from "react-icons/tb";
 import {
@@ -23,6 +23,20 @@ import { AnimatePresence } from "motion/react";
 
 export default function Header() {
   const [showLinks, setShowLinks] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      setCartCount(cart.length);
+    };
+
+    updateCartCount(); // Initial count
+
+    window.addEventListener("cartUpdated", updateCartCount); // Listen for updates
+
+    return () => window.removeEventListener("cartUpdated", updateCartCount); // Cleanup
+  }, []);
   return (
     <nav className="fixed left-0 top-0 w-full flex justify-between p-3 z-[50] sm:z-50 text-gray-700 bg-white">
       <header className="relative w-96">
@@ -75,7 +89,7 @@ export default function Header() {
         <Link href="/cart" className="relative">
           <IoCartOutline className="text-2xl" />
           <p className="absolute -top-1 -right-2 text-xs bg-[#E27210] rounded-full text-white w-4 h-4 tflex text-center">
-            0
+            {cartCount}
           </p>
         </Link>
         <div className="relative">

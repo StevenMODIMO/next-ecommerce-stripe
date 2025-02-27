@@ -112,12 +112,9 @@ export default function ProductListings() {
                 <div
                   key={product.product_id}
                   className="bg-white shadow-md rounded p-6 flex flex-col items-center w-full sm:w-[30%] lg:w-[24%] relative group"
-                  
                 >
                   <Link
-                    href={`/products/${product.product_name
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}`}
+                    href={`/products/${product.product_id}`}
                     className="block"
                   >
                     <img
@@ -137,11 +134,7 @@ export default function ProductListings() {
                   </Link>
                   <div className="absolute bottom-0 left-0 right-0 bg-black/10 rounded-b opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="flex justify-between p-1">
-                      <Link
-                        href={`/products/${product.product_name
-                          .toLowerCase()
-                          .replace(/\s+/g, "-")}`}
-                      >
+                      <Link href={`/products/${product.product_id}`}>
                         <motion.div
                           className="text-white rounded-full p-2 cursor-pointer"
                           whileHover={{ scale: 1.2 }}

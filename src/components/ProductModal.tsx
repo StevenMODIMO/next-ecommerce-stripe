@@ -16,7 +16,7 @@ export default function ProductModal({ children }: ProductModalProps) {
       className="fixed h-screen w-screen top-0 bg-black/10 inset-0 z-[100] flex flex-col justify-end items-center"
     >
       <motion.div
-        className="bg-white rounded-t-3xl p-4 text-3xl font-bold h-[80%] w-full lg:h-[80%] lg:w-[80%]"
+        className="bg-white rounded-t-3xl h-[80%] w-full overflow-auto lg:h-[80%] lg:w-[80%]"
         initial={{ y: 1200 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
