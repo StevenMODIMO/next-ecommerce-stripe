@@ -1,7 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
-import { MdDeleteOutline, MdShoppingCart } from "react-icons/md";
+import {
+  MdDeleteOutline,
+  MdShoppingCart,
+  MdShoppingCartCheckout,
+} from "react-icons/md";
 import { useRouter } from "next/navigation";
+import { CgMenuGridO } from "react-icons/cg";
+import Link from "next/link";
 
 interface ProductProps {
   product_id: string;
@@ -52,28 +58,44 @@ export default function CartProducts() {
               return (
                 <div
                   key={product_id}
-                  className="flex items-center justify-between p-2"
+                  className="flex items-center justify-between p-2 bg-gray-100 rounded"
                 >
-                  <section>
-                    <img
-                      src={product_image}
-                      alt={product_name}
-                      className="w-24 h-24"
-                    />
-                    <div>
-                      <p>{product_name}</p>
-                      <p>{price}</p>
-                    </div>
-                  </section>
-                  <div className="p-2">
+                  <div className="flex gap-2 items-center">
+                    <CgMenuGridO className="text-xl text-[#E27210] lg:text-2xl" />
+                    <section className="flex items-end gap-2">
+                      <img
+                        src={product_image}
+                        alt={product_name}
+                        className="w-20 h-20 lg:w-28 lg:h-28"
+                      />
+                      <div className="flex flex-col gap-2">
+                        <p className="text-gray-800 text-sm font-medium sm:text-lg md:text-xl lg:text-2xl">
+                          {product_name}
+                        </p>
+                        <p className="text-gray-700 text-xs font-medium sm:text-sm lg:text-lg">
+                          Price: ${price}
+                        </p>
+                      </div>
+                    </section>
+                  </div>
+                  <div className="p-2 hover:bg-gray-200 cursor-pointer rounded-full">
                     <MdDeleteOutline
                       onClick={() => handleDelete(product_id)}
-                      className="text-[#E27210]"
+                      className="text-2xl text-[#E27210] lg:text-3xl"
                     />
                   </div>
                 </div>
               );
             }
+          )}
+          {products.length > 0 && (
+            <Link
+              href="/checkout"
+              className="flex gap-2 items-center w-fit mx-auto my-3 p-2 rounded bg-[#E27210] text-white"
+            >
+              <MdShoppingCartCheckout />
+              <span>Checkout</span>
+            </Link>
           )}
         </section>
       )}

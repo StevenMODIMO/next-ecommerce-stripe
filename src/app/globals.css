@@ -13,16 +13,12 @@ html {
 
 ::-webkit-scrollbar-track {
   background: #f1f1f1; /* Track background */
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #e27210; /* Scrollbar color */
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #c25b0c; /* Darker shade on hover */
+  border-radius: 20px;
 }
 
 /* For Firefox */
