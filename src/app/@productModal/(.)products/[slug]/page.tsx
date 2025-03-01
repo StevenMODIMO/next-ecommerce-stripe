@@ -63,6 +63,7 @@ export default async function Product({ params }: { params: Params }) {
                 product_name={data.product_name}
                 product_image={data.product_image}
                 product_id={data.product_id}
+                price={data.price}
               />
             </div>
           </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Footer from "@/components/Footer"
 
 export const metadata: Metadata = {
     title: 'Log In',
@@ -11,6 +12,7 @@ export default function Cart() {
             <header>
                 <p>Login page</p>
             </header>
+            <Footer />
         </main>
     )
 }

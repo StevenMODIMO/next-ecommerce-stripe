@@ -24,7 +24,7 @@ export default function Modal({ children }: ModalProps) {
           exit={{ x: "100%" }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-white min-h-screen w-full sm:w-[50%] shadow-lg overflow-hidden"
+          className="bg-white min-h-screen w-full sm:w-[50%] shadow-lg scrollable"
         >
           <header
             className="w-fit rounded-full p-2 text-xl text-gray-400 cursor-pointer sm:text-2xl"

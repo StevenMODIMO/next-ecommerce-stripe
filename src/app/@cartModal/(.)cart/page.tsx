@@ -5,8 +5,8 @@ export default function Cart() {
   return (
     <Modal>
       <main>
-        <header className="text-center p-2 font-semibold text-xl">
-          <p>Cart Modal</p>
+        <header className="text-2xl p-2 font-medium text-gray-800">
+          <p>Cart View</p>
         </header>
         <CartProducts />
       </main>

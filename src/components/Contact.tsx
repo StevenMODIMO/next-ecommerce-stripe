@@ -24,7 +24,7 @@ export default function Contact() {
           </p>
         </header>
 
-        <form className="bg-white p-6 rounded-lg shadow-md">
+        <form className="bg-white p-6 rounded">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <label className="flex flex-col">
               <span className="text-gray-700 font-medium flex items-center gap-2">

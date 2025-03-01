@@ -5,3 +5,39 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* For Webkit browsers (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 6px; /* Adjust the width */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track background */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e27210; /* Scrollbar color */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c25b0c; /* Darker shade on hover */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #e27210 #f1f1f1;
+}
+
+
+.scrollable {
+  overflow-y: auto; /* Enables vertical scrolling */
+  scrollbar-width: none; /* Hides scrollbar in Firefox */
+  -ms-overflow-style: none; /* Hides scrollbar in IE/Edge */
+}
+
+.scrollable::-webkit-scrollbar {
+  display: none; /* Hides scrollbar in WebKit browsers */
+}
