@@ -19,6 +19,11 @@ interface ProductProps {
 export default function CartProducts() {
   const router = useRouter();
   const [products, setProducts] = useState<ProductProps[]>([]);
+
+  const handleCheckout = () => {
+    window.location.href = "/checkout";
+  };
+
   useEffect(() => {
     const getCartProducts = () => {
       const cart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -52,7 +57,7 @@ export default function CartProducts() {
           </div>
         </section>
       ) : (
-        <section className="flex flex-col gap-3 py-3 px-2">
+        <section className="flex flex-col gap-3 py-3 px-2 lg:px-4 lg:py-6">
           {products.map(
             ({ product_id, product_name, product_image, price }) => {
               return (
@@ -61,12 +66,12 @@ export default function CartProducts() {
                   className="flex items-center justify-between p-2 bg-gray-100 rounded"
                 >
                   <div className="flex gap-2 items-center">
-                    <CgMenuGridO className="text-xl text-[#E27210] lg:text-2xl" />
+                    <CgMenuGridO className="text-xl text-[#E27210]" />
                     <section className="flex items-end gap-2">
                       <img
                         src={product_image}
                         alt={product_name}
-                        className="w-20 h-20 lg:w-28 lg:h-28"
+                        className="w-20 h-20 lg:w-24 lg:h-24 lg:rounded-full"
                       />
                       <div className="flex flex-col gap-2">
                         <p className="text-gray-800 text-sm font-medium sm:text-lg md:text-xl lg:text-2xl">
@@ -89,13 +94,13 @@ export default function CartProducts() {
             }
           )}
           {products.length > 0 && (
-            <Link
-              href="/checkout"
+            <button
+              onClick={handleCheckout}
               className="flex gap-2 items-center w-fit mx-auto my-3 p-2 rounded bg-[#E27210] text-white"
             >
               <MdShoppingCartCheckout />
               <span>Checkout</span>
-            </Link>
+            </button>
           )}
         </section>
       )}

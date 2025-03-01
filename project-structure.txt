@@ -1,0 +1,72 @@
+src
+├── app
+│   ├── @cartModal
+│   │   ├── (.)cart
+│   │   │   └── page.tsx
+│   │   └── default.tsx
+│   ├── @productModal
+│   │   ├── (.)products
+│   │   │   └── [slug]
+│   │   │       └── page.tsx
+│   │   └── default.tsx
+│   ├── about
+│   │   └── page.tsx
+│   ├── admin
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── api
+│   │   ├── admin
+│   │   │   └── route.ts
+│   │   └── products
+│   │       └── route.ts
+│   ├── assets
+│   │   ├── cart-logo.svg
+│   │   ├── user-01.webp
+│   │   ├── user-02.webp
+│   │   ├── user-03.jpg
+│   │   ├── user-04.jpg
+│   │   └── waves.svg
+│   ├── cart
+│   │   └── page.tsx
+│   ├── checkout
+│   │   └── page.tsx
+│   ├── globals.css
+│   ├── icon.svg
+│   ├── layout.tsx
+│   ├── loading.tsx
+│   ├── not-found.tsx
+│   ├── opengraph-image.png
+│   ├── page.tsx
+│   ├── products
+│   │   ├── page.tsx
+│   │   └── [slug]
+│   │       └── page.tsx
+│   ├── signin
+│   │   └── page.tsx
+│   └── signup
+│       └── page.tsx
+├── components
+│   ├── AddToCart.tsx
+│   ├── admin
+│   │   ├── AdminCard.tsx
+│   │   ├── AdminForm.tsx
+│   │   ├── AdminHeader.tsx
+│   │   └── ProductOutput.tsx
+│   ├── Banner.tsx
+│   ├── CartProducts.tsx
+│   ├── CategoryListings.tsx
+│   ├── Contact.tsx
+│   ├── Features.tsx
+│   ├── Footer.tsx
+│   ├── Header.tsx
+│   ├── MobileNav.tsx
+│   ├── Modal.tsx
+│   ├── NewsLetter.tsx
+│   ├── ProductListings.tsx
+│   ├── ProductModal.tsx
+│   ├── ProgressBarProvider.tsx
+│   ├── ScrollToTop.tsx
+│   └── Testimonials.tsx
+└── lib
+    ├── data.ts
+    └── db.ts
