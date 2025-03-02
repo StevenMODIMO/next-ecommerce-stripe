@@ -3,9 +3,7 @@ import { useState, useEffect } from "react";
 import {
   MdDeleteOutline,
   MdShoppingCart,
-  MdShoppingCartCheckout,
 } from "react-icons/md";
-import { useRouter } from "next/navigation";
 import { CgMenuGridO } from "react-icons/cg";
 import Link from "next/link";
 
@@ -17,12 +15,7 @@ interface ProductProps {
 }
 
 export default function CartProducts() {
-  const router = useRouter();
   const [products, setProducts] = useState<ProductProps[]>([]);
-
-  const handleCheckout = () => {
-    window.location.href = "/checkout";
-  };
 
   useEffect(() => {
     const getCartProducts = () => {
@@ -49,12 +42,12 @@ export default function CartProducts() {
             </div>
             <p className="text-gray-600 font-medium">Your cart is empty</p>
           </header>
-          <div
+          <Link
+            href="/products"
             className="w-fit p-2 mx-auto my-4 rounded bg-[#E27210] text-white cursor-pointer"
-            onClick={() => router.back()}
           >
             Continue shopping
-          </div>
+          </Link>
         </section>
       ) : (
         <section className="flex flex-col gap-3 py-3 px-2 lg:px-4 lg:py-6">
@@ -94,13 +87,12 @@ export default function CartProducts() {
             }
           )}
           {products.length > 0 && (
-            <button
-              onClick={handleCheckout}
+            <Link
+              href="/checkout"
               className="flex gap-2 items-center w-fit mx-auto my-3 p-2 rounded bg-[#E27210] text-white"
             >
-              <MdShoppingCartCheckout />
               <span>Checkout</span>
-            </button>
+            </Link>
           )}
         </section>
       )}

@@ -1,0 +1,99 @@
+"use client";
+import { useState, useEffect } from "react";
+import { MdDeleteOutline } from "react-icons/md";
+import { CgMenuGridO } from "react-icons/cg";
+import { FaPlus } from "react-icons/fa6";
+import { FaMinus } from "react-icons/fa";
+
+interface Products {
+  product_id: string;
+  product_name: string;
+  product_image: string;
+  price: string;
+}
+
+export default function CheckoutProducts() {
+  const [products, setProducts] = useState<Products[]>([]);
+  const [quantity, setQuantity] = useState(1);
+
+  const handleDelete = (id: string) => {
+    const updatedCart = products.filter((product) => product.product_id !== id);
+    setProducts(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    window.dispatchEvent(new Event("cartUpdated"));
+  };
+
+  const handleQuantityChange = (operation: "increase" | "decrease") => {
+    setQuantity((prevQuantity) => {
+      if (operation === "increase" && prevQuantity < 5) {
+        return prevQuantity + 1;
+      } else if (operation === "decrease" && prevQuantity > 1) {
+        return prevQuantity - 1;
+      }
+      return prevQuantity;
+    });
+  };
+
+  useEffect(() => {
+    const getProducts = () => {
+      const prods = JSON.parse(localStorage.getItem("products") || "[]");
+      setProducts(prods);
+    };
+    getProducts();
+  }, []);
+
+  return (
+    <div>
+      <section className="flex flex-col gap-3 py-3 px-2 lg:px-4 lg:py-6">
+        {products.map(({ product_id, product_name, product_image, price }) => {
+          return (
+            <div
+              key={product_id}
+              className="flex items-center justify-between p-2 bg-gray-100 rounded"
+            >
+              <div className="flex gap-2 items-center">
+                <CgMenuGridO className="text-xl text-[#E27210]" />
+                <section className="flex items-end gap-2">
+                  <img
+                    src={product_image}
+                    alt={product_name}
+                    className="w-20 h-20 lg:w-24 lg:h-24 lg:rounded-full"
+                  />
+                  <div className="flex flex-col gap-2">
+                    <p className="text-gray-800 text-sm font-medium sm:text-lg md:text-xl lg:text-2xl">
+                      {product_name}
+                    </p>
+                    <p className="text-gray-700 text-xs font-medium sm:text-sm lg:text-lg">
+                      Price: ${price}
+                    </p>
+                  </div>
+                </section>
+              </div>
+              <section>
+                <button
+                  onClick={() => handleQuantityChange("increase")}
+                  className="w-fit p-2 rounded"
+                >
+                  <FaPlus />
+                </button>
+                <div>{quantity}</div>
+                <button
+                  onClick={() => handleQuantityChange("decrease")}
+                  className="w-fit p-2 rounded"
+                >
+                  <FaMinus />
+                </button>
+              </section>
+              <div className="p-2 hover:bg-gray-200 cursor-pointer rounded-full">
+                <MdDeleteOutline
+                  onClick={() => handleDelete(product_id)}
+                  className="text-2xl text-[#E27210] lg:text-3xl"
+                />
+              </div>
+            </div>
+          );
+        })}
+      </section>
+    </div>
+  );
+}
