@@ -5,7 +5,7 @@ import { CgMenuGridO } from "react-icons/cg";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 
-interface Products {
+interface Product {
   product_id: string;
   product_name: string;
   product_image: string;
@@ -13,39 +13,61 @@ interface Products {
 }
 
 export default function CheckoutProducts() {
-  const [products, setProducts] = useState<Products[]>([]);
-  const [quantity, setQuantity] = useState(1);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
+
+  useEffect(() => {
+    const getProducts = () => {
+      const prods: Product[] = JSON.parse(localStorage.getItem("cart") || "[]");
+      setProducts(prods);
+      // Initialize quantity for each product (default to 1)
+      const initialQuantities = prods.reduce((acc, product) => {
+        acc[product.product_id] = 1;
+        return acc;
+      }, {} as { [key: string]: number });
+      setQuantities(initialQuantities);
+    };
+    getProducts();
+  }, []);
 
   const handleDelete = (id: string) => {
     const updatedCart = products.filter((product) => product.product_id !== id);
     setProducts(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     window.dispatchEvent(new Event("cartUpdated"));
+
+    // Remove quantity tracking for deleted product
+    const updatedQuantities = { ...quantities };
+    delete updatedQuantities[id];
+    setQuantities(updatedQuantities);
   };
 
-  const handleQuantityChange = (operation: "increase" | "decrease") => {
-    setQuantity((prevQuantity) => {
-      if (operation === "increase" && prevQuantity < 5) {
-        return prevQuantity + 1;
-      } else if (operation === "decrease" && prevQuantity > 1) {
-        return prevQuantity - 1;
-      }
-      return prevQuantity;
+  const handleQuantityChange = (
+    id: string,
+    operation: "increase" | "decrease"
+  ) => {
+    setQuantities((prevQuantities) => {
+      const newQuantity =
+        operation === "increase"
+          ? Math.min(prevQuantities[id] + 1, 5) // Max 5
+          : Math.max(prevQuantities[id] - 1, 1); // Min 1
+
+      return { ...prevQuantities, [id]: newQuantity };
     });
   };
 
-  useEffect(() => {
-    const getProducts = () => {
-      const prods = JSON.parse(localStorage.getItem("products") || "[]");
-      setProducts(prods);
-    };
-    getProducts();
-  }, []);
+  // Calculate subtotal of all products
+  const subtotal = products.reduce(
+    (sum, { product_id, price }) =>
+      sum + parseFloat(price) * (quantities[product_id] || 1),
+    0
+  );
 
   return (
     <div>
       <section className="flex flex-col gap-3 py-3 px-2 lg:px-4 lg:py-6">
         {products.map(({ product_id, product_name, product_image, price }) => {
+          const totalPrice = parseFloat(price) * (quantities[product_id] || 1);
           return (
             <div
               key={product_id}
@@ -70,19 +92,26 @@ export default function CheckoutProducts() {
                 </section>
               </div>
               <section>
-                <button
-                  onClick={() => handleQuantityChange("increase")}
-                  className="w-fit p-2 rounded"
-                >
-                  <FaPlus />
-                </button>
-                <div>{quantity}</div>
-                <button
-                  onClick={() => handleQuantityChange("decrease")}
-                  className="w-fit p-2 rounded"
-                >
-                  <FaMinus />
-                </button>
+                <p>Quantity</p>
+                <section className="flex items-center gap-2">
+                  <button
+                    onClick={() => handleQuantityChange(product_id, "decrease")}
+                    className="w-fit p-2 rounded bg-gray-200"
+                  >
+                    <FaMinus />
+                  </button>
+
+                  <div>{quantities[product_id]}</div>
+                  <button
+                    onClick={() => handleQuantityChange(product_id, "increase")}
+                    className="w-fit p-2 rounded bg-gray-200"
+                  >
+                    <FaPlus />
+                  </button>
+                </section>
+                <p className="text-gray-700 text-sm font-medium mt-1">
+                  Total: ${totalPrice.toFixed(2)}
+                </p>
               </section>
               <div className="p-2 hover:bg-gray-200 cursor-pointer rounded-full">
                 <MdDeleteOutline
@@ -93,6 +122,11 @@ export default function CheckoutProducts() {
             </div>
           );
         })}
+      </section>
+      <section className="flex justify-end px-2 lg:px-4 py-4 border-t-2 border-gray-300">
+        <p className="text-gray-900 text-lg font-semibold">
+          Subtotal: ${subtotal.toFixed(2)}
+        </p>
       </section>
     </div>
   );
