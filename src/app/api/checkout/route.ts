@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
       amount,
       currency,
     });
-    return NextResponse.json(paymentIntent);
+    return NextResponse.json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
     return NextResponse.json(error);
   }

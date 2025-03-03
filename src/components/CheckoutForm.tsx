@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import {
   PaymentElement,
   useStripe,
@@ -6,7 +7,6 @@ import {
   Elements,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { FormEvent, useState } from "react";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
@@ -18,7 +18,7 @@ function CheckoutForm() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!stripe || !elements) {
       return;
@@ -28,7 +28,7 @@ function CheckoutForm() {
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout`,
+        return_url: `${process.env.BASE_URL}/checkout`,
       },
       redirect: "if_required",
     });
@@ -58,9 +58,41 @@ function CheckoutForm() {
 }
 
 export default function CheckoutWrapper() {
-  return (
-    <Elements stripe={stripePromise}>
+  const [clientSecret, setClientSecret] = useState("");
+
+  useEffect(() => {
+    const createPaymentIntent = async () => {
+      try {
+        const res = await fetch("/api/checkout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: 5000, // Example: $50.00 (Stripe accepts amounts in cents)
+            currency: "usd",
+          }),
+        });
+
+        const data = await res.json();
+        if (data.clientSecret) {
+          setClientSecret(data.clientSecret);
+        } else {
+          console.error("Failed to get clientSecret", data);
+        }
+      } catch (error) {
+        console.error("Error fetching payment intent:", error);
+      }
+    };
+
+    createPaymentIntent();
+  }, []);
+
+  return clientSecret ? (
+    <Elements stripe={stripePromise} options={{ clientSecret }}>
       <CheckoutForm />
     </Elements>
+  ) : (
+    <p>Loading payment details...</p>
   );
 }
