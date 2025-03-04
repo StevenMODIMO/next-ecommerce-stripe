@@ -7,6 +7,7 @@ export async function GET(req: NextRequest) {
   const banner = searchParams.get("banner");
 
   try {
+    // Get item by id
     if (id) {
       const product = await query(
         "SELECT * FROM products WHERE product_id = $1",
@@ -15,6 +16,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(product.rows[0]);
     }
 
+    // get the banner item
     if (banner === "true") {
       const bannerProduct = await query(
         "SELECT * FROM products WHERE product_name = 'Play station 5 (PS5)';"
