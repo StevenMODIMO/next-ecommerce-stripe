@@ -38,7 +38,7 @@ export default function Header() {
     return () => window.removeEventListener("cartUpdated", updateCartCount); // Cleanup
   }, []);
   return (
-    <nav className="fixed left-0 top-0 w-full flex justify-between p-3 z-[50] sm:z-50 text-gray-700 bg-white">
+    <nav className="fixed left-0 top-0 w-full flex justify-between p-3 border-b-2 z-[50] sm:z-50 text-gray-700 bg-white">
       <header className="relative w-96">
         <Link href="/">
           <Image

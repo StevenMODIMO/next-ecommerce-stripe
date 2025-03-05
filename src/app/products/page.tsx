@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import ProductFilter from "@/components/ProductFilter";
 import { Suspense } from "react";
-import Loading from "@/app/loading"
+import Loading from "@/app/loading";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -10,12 +11,13 @@ export const metadata: Metadata = {
 
 export default function page() {
   return (
-    <div className="max-w-7xl mx-auto py-12 p-4">
+    <div className="max-w-7xl mx-auto p-4 bg-gray-50">
       <div>
         <Suspense fallback={<Loading />}>
           <ProductFilter />
         </Suspense>
       </div>
+      <Footer />
     </div>
   );
 }
