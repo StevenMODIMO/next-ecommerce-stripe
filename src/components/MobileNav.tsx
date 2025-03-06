@@ -50,7 +50,7 @@ export const navLinks: LinkTypes[] = [
   {
     id: 6,
     name: "SignIn",
-    path: "/signin",
+    path: "/login",
   },
 ];
 

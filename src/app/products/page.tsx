@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 
 export default function page() {
   return (
-    <div className="max-w-7xl mx-auto p-4 bg-gray-50">
-      <div>
+    <div className="w-full py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-16">
         <Suspense fallback={<Loading />}>
           <ProductFilter />
         </Suspense>

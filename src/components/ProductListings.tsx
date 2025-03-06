@@ -128,9 +128,14 @@ export default function ProductListings() {
                     <p className="text-sm text-gray-600">
                       {product.product_category}
                     </p>
-                    <p className="text-lg font-bold text-[#E27210]">
-                      ${product.price}
-                    </p>
+                    <div className="flex justify-between">
+                      <p className="text-lg font-bold text-[#E27210]">
+                        ${product.price}
+                      </p>
+                      <p className="text-green-500">
+                        ({product.quantity} in stock)
+                      </p>
+                    </div>
                   </Link>
                   <div className="absolute bottom-0 left-0 right-0 bg-black/10 rounded-b opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="flex justify-between p-1">

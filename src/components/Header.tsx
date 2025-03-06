@@ -20,10 +20,12 @@ import {
 } from "react-icons/md";
 import { BiSolidLogIn } from "react-icons/bi";
 import { AnimatePresence } from "motion/react";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [showLinks, setShowLinks] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const pathname = usePathname();
 
   useEffect(() => {
     const updateCartCount = () => {
@@ -38,7 +40,13 @@ export default function Header() {
     return () => window.removeEventListener("cartUpdated", updateCartCount); // Cleanup
   }, []);
   return (
-    <nav className="fixed left-0 top-0 w-full flex justify-between p-3 border-b-2 z-[50] sm:z-50 text-gray-700 bg-white">
+    <nav
+      className={` ${
+        pathname === "/login" || pathname === "/signup"
+          ? "hidden"
+          : "fixed left-0 top-0 w-full flex justify-between p-3 border-b-2 z-[50] sm:z-50 text-gray-700 bg-white"
+      }`}
+    >
       <header className="relative w-96">
         <Link href="/">
           <Image
@@ -92,7 +100,7 @@ export default function Header() {
             {cartCount}
           </p>
         </Link>
-        <div className="relative">
+        {/* <div className="relative">
           <IoIosNotificationsOutline className="text-2xl" />
           <p className="absolute -top-1 -right-2 text-xs bg-[#E27210] rounded-full text-white w-4 h-4 tflex text-center">
             0
@@ -103,7 +111,7 @@ export default function Header() {
           <p className="absolute -top-1 -right-2 text-xs bg-[#E27210] rounded-full text-white w-4 h-4 tflex text-center">
             0
           </p>
-        </div>
+        </div> */}
         <div>
           <MdOutlineAccountCircle className="text-2xl" />
         </div>

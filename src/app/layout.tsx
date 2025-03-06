@@ -6,7 +6,7 @@ import ProgressBarProvider from "@/components/ProgressBarProvider";
 
 export const metadata: Metadata = {
   title: "Quick Cart",
-  description: "Nextjs ecommerce web app + Stripejs payment gateway.",
+  description: "Next.js eCommerce web app + Stripe.js payment gateway.",
 };
 
 const nunito = Nunito({ subsets: ["latin"] });

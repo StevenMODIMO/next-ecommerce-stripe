@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { GoSidebarCollapse } from "react-icons/go";
+import Link from "next/link";
 
 interface Category {
   id: number;
@@ -65,59 +66,61 @@ export default function CategoryFilter() {
   }, [searchParams]);
 
   return (
-    <div className="sm:grid sm:grid-cols-[250px_auto] gap-6">
-      {/* Filter Section */}
-      <section className="rounded border p-4 bg-white shadow">
-        <header className="flex justify-between items-center mb-2">
-          <h2 className="font-semibold text-gray-800">Filters:</h2>
+    <div className="flex flex-col gap-3 md:flex-row">
+      <section className="flex flex-col gap-1 shadow rounded-md md:h-fit md:w-[30%] lg:w-[20%]">
+        <header className="flex justify-between items-center p-2">
+          <h2 className="font-medium text-gray-800">Filters:</h2>
           <GoSidebarCollapse
-            className="rotate-90 text-[#E27210] text-lg cursor-pointer"
+            className="text-2xl font-bold text-[#E27210] rotate-90"
             onClick={() => setShow(!show)}
           />
         </header>
-        <div className={`${show ? "flex flex-col gap-3 h-fit" : "hidden"}`}>
+        <div
+          className={`${
+            show
+              ? "flex flex-col gap-1 p-2"
+              : "hidden md:flex md:flex-col md:gap-1 md:p-2"
+          }`}
+        >
           {categories.map((category) => (
-            <label key={category.id} className="flex items-center gap-2">
+            <label
+              key={category.id}
+              className="flex items-center gap-1 cursor-pointer"
+            >
               <input
                 className="accent-[#E27210]"
                 type="checkbox"
                 checked={selectedCategories.has(category.value)}
                 onChange={() => handleCategoryChange(category.value)}
               />
-              <span className="text-sm text-gray-700">{category.title}</span>
+              <span className="text-sm text-gray-600 sm:text-base">
+                {category.title}
+              </span>
             </label>
           ))}
         </div>
       </section>
-
-      {/* Product Listing */}
-      <div className="my-4">
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="md:w-[70%]">
+        <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
           {products.length > 0 ? (
             products.map((product: any) => (
-              <li
+              <Link
+                href={`/products/${product.product_id}`}
                 key={product.product_id}
-                className="flex flex-col gap-2 bg-white p-3 rounded-lg shadow-md"
               >
-                <img
-                  src={product.product_image} 
-                  className="w-full h-48 rounded-md object-cover"
-                />
-                <p className="font-semibold text-gray-800">{product.product_name}</p>
-                <div className="flex justify-between items-center">
-                  <p className="font-bold text-[#E27210] text-lg">${product.price}</p>
-                  <p className="text-green-600 font-medium text-sm">
-                    ({product.quantity} in stock)
-                  </p>
+                <img src={product.product_image} />
+                <p>{product.product_name}</p>
+                <div>
+                  <p>${product.price}</p>
+                  <p>({product.quantity} in stock)</p>
                 </div>
-              </li>
+              </Link>
             ))
           ) : (
-            <p className="col-span-full text-center text-gray-500">No products found.</p>
+            <p>No products found.</p>
           )}
         </ul>
       </div>
     </div>
   );
 }
-

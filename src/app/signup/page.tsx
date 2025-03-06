@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-
+import Signup from "@/components/auth/Signup"
 import Footer from "@/components/Footer"
 
 export const metadata: Metadata = {
@@ -10,9 +10,7 @@ export const metadata: Metadata = {
 export default function Cart() {
   return (
     <main>
-      <header>
-        <p>Get started page</p>
-      </header>
+      <Signup />
       <Footer />
     </main>
   );
