@@ -49,56 +49,68 @@ export default function Signup() {
     }
   };
   return (
-    <div>
-      <header className="text-gray-800 font-medium">
-        <h1>Create account to get started</h1>
-      </header>
-      <form
-        onSubmit={handleSubmit}
-        onFocus={() => setError(null)}
-        className="flex flex-col gap-3 p-4"
-      >
-        <label className="flex items-center gap-1">
-          <CiImageOn />
-          <span>Upload Avatar</span>
-          <input type="file" className="hidden" onChange={handleImageChange} />
-        </label>
-        <label>
-          <div className="flex items-center gap-2">
-            <MdAlternateEmail />
-            <span>Email address</span>
-          </div>
-          <input
-            className="p-3 outline-none border rounded"
-            placeholder="example@gmail.com"
-          />
-        </label>
-        <label>
-          <section className="flex justify-between">
+    <div className="max-w-7xl mx-auto text-gray-800 px-4 sm:px-12 lg:px-16">
+      <section className="flex flex-col gap-1 shadow rounded p-3">
+        <header className="font-medium text-center text-lg">
+          <h1>Create account to get started</h1>
+        </header>
+        <form
+          onSubmit={handleSubmit}
+          onFocus={() => setError(null)}
+          className="flex flex-col gap-3 my-4 w-64 mx-auto"
+        >
+          <label className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
-              <RiLockPasswordLine />
-              <span>Passowrd</span>
+              <MdAlternateEmail className="text-[#E27210]" />
+              <span>Email address</span>
             </div>
-            <div
-              className="cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FaRegEyeSlash /> : <FaEye />}
+            <input
+              className="p-2 outline-none border rounded w-full"
+              placeholder="example@gmail.com"
+            />
+          </label>
+          <label className="flex flex-col gap-2">
+            <section className="flex justify-between">
+              <div className="flex items-center gap-2">
+                <RiLockPasswordLine className="text-[#E27210]" />
+                <span>Password</span>
+              </div>
+              <div
+                className="cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <FaRegEyeSlash className="text-[#E27210]" />
+                ) : (
+                  <FaEye className="text-[#E27210]" />
+                )}
+              </div>
+            </section>
+            <input
+              className="p-2 outline-none border rounded w-full"
+              placeholder="Your strong password"
+              type={showPassword ? "text" : "password"}
+            />
+          </label>
+          <label className="flex items-center gap-1">
+            <CiImageOn className="text-[#E27210]" />
+            <span>Upload Avatar</span>
+            <input
+              type="file"
+              className="hidden"
+              onChange={handleImageChange}
+            />
+          </label>
+          <button className="text-white bg-[#E27210] rounded p-2 w-fit mx-auto">
+            Create account
+          </button>
+          {error && (
+            <div className="text-white bg-red-500 p-2 rounded w-fit mx-auto">
+              {error}
             </div>
-          </section>
-          <input
-            className="p-3 outline-none border rounded"
-            placeholder="Your strong password"
-            type={showPassword ? "text" : "password"}
-          />
-        </label>
-        <button>Sign In </button>
-        {error && (
-          <div className="text-white bg-red-500 p-2 rounded w-fit mx-auto">
-            {error}
-          </div>
-        )}
-      </form>
+          )}
+        </form>
+      </section>
     </div>
   );
 }
