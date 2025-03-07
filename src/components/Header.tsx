@@ -20,12 +20,10 @@ import {
 } from "react-icons/md";
 import { BiSolidLogIn } from "react-icons/bi";
 import { AnimatePresence } from "motion/react";
-import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [showLinks, setShowLinks] = useState(false);
   const [cartCount, setCartCount] = useState(0);
-  const pathname = usePathname();
 
   useEffect(() => {
     const updateCartCount = () => {
@@ -40,13 +38,7 @@ export default function Header() {
     return () => window.removeEventListener("cartUpdated", updateCartCount); // Cleanup
   }, []);
   return (
-    <nav
-      className={` ${
-        pathname === "/login" || pathname === "/signup"
-          ? "hidden"
-          : "fixed left-0 top-0 w-full flex justify-between p-3 border-b-2 z-[50] sm:z-50 text-gray-700 bg-white"
-      }`}
-    >
+    <nav className="fixed left-0 top-0 w-full flex justify-between p-3 border-b-2 z-[50] sm:z-50 text-gray-700 bg-white">
       <header className="relative w-96">
         <Link href="/">
           <Image

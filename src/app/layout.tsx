@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { Nunito } from "next/font/google";
 import ProgressBarProvider from "@/components/ProgressBarProvider";
+import SessionWrapper from "@/components/auth/SessionProvider";
 
 export const metadata: Metadata = {
   title: "Quick Cart",
@@ -21,13 +22,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${nunito.className} bg-white`}>
-        <Header />
-        <div className="pt-[60px]">
-          <ProgressBarProvider>
-            {children}
-            {productModal}
-          </ProgressBarProvider>
-        </div>
+        <SessionWrapper>
+          <Header />
+          <div className="pt-[60px]">
+            <ProgressBarProvider>
+              {children}
+              {productModal}
+            </ProgressBarProvider>
+          </div>
+        </SessionWrapper>
       </body>
     </html>
   );
