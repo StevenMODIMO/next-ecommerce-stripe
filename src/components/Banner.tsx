@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
+import Loading from "@/app/loading";
 
 interface Product {
   product_id: string;
@@ -40,16 +41,13 @@ export default function Banner() {
 
   if (!product) {
     return (
-      <div className="w-full h-[400px] flex items-center justify-center bg-gray-100">
-        <p className="text-gray-700 text-lg font-semibold">Loading...</p>
-      </div>
+        <Loading />
     );
   }
 
   return (
     <section className="relative w-full bg-gray-100 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-16 flex flex-col lg:flex-row items-center gap-8">
-        {/* Product Image */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -62,8 +60,6 @@ export default function Banner() {
             className="w-full h-[350px] object-cover rounded-2xl shadow-lg"
           />
         </motion.div>
-
-        {/* Product Details */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -77,8 +73,6 @@ export default function Banner() {
           <span className="text-[#E27210] text-xl font-semibold">
             ${product.price}
           </span>
-
-          {/* CTA Buttons */}
           <div className="flex gap-4 mt-4">
             <Link
               href={`/products/${product.product_id}`}

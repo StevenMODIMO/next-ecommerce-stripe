@@ -31,11 +31,11 @@ export default function Header() {
       setCartCount(cart.length);
     };
 
-    updateCartCount(); // Initial count
+    updateCartCount();
 
-    window.addEventListener("cartUpdated", updateCartCount); // Listen for updates
+    window.addEventListener("cartUpdated", updateCartCount);
 
-    return () => window.removeEventListener("cartUpdated", updateCartCount); // Cleanup
+    return () => window.removeEventListener("cartUpdated", updateCartCount);
   }, []);
   return (
     <nav className="fixed left-0 top-0 w-full flex justify-between p-3 border-b-2 z-[50] sm:z-50 text-gray-700 bg-white">
@@ -50,15 +50,6 @@ export default function Header() {
         </Link>
       </header>
       <div className="flex items-center gap-4">
-        {" "}
-        <label className="hidden lg:rounded-md lg:bg-gray-100 lg:flex lg:items-center lg:gap-2">
-          <IoIosSearch className="text-[#E27210] text-lg" />
-          <input
-            type="text"
-            className="outline-none bg-gray-100 rounded-md p-1 text-gray-500"
-            placeholder="Search Products ..."
-          />
-        </label>
         <div className="hidden lg:flex lg:gap-3 lg:mr-6">
           {navLinks.map(({ id, name, path }) => (
             <Link
