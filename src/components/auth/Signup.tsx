@@ -66,7 +66,7 @@ export default function Signup() {
   };
   return (
     <div className="max-w-7xl mx-auto text-gray-800 px-4 sm:px-12 lg:px-16">
-      <section className="flex flex-col gap-1 shadow rounded p-3">
+      <section className="flex flex-col gap-1 shadow rounded p-3 sm:w-[70%] sm:mx-auto lg:p-8 lg:w-[40%]">
         <header className="font-medium text-center text-xl">
           <h1>Create account to get started</h1>
         </header>
@@ -157,16 +157,16 @@ export default function Signup() {
           or continue with
         </div>
         <footer className="my-2 flex flex-col gap-2">
-          <div className="flex items-center gap-1 p-2 border rounded-md">
-            <FaFacebook />
-            <p className="text-gray-700 text-lg">Facebook</p>
+          <div className="flex items-center gap-2 p-2 border rounded-md bg-blue-500">
+            <FaFacebook className="text-2xl text-white" />
+            <p className="text-white text-lg">Facebook</p>
           </div>
-          <div className="flex items-center gap-1 p-2 border rounded-md">
-            <FaXTwitter />
-            <p className="text-gray-700 text-lg">Twitter</p>
+          <div className="flex items-center gap-2 p-2 border rounded-md bg-black/90">
+            <FaXTwitter className="text-2xl text-white" />
+            <p className="text-white text-lg">Twitter</p>
           </div>
-          <div className="flex items-center gap-1 p-2 border rounded-md">
-            <FcGoogle />
+          <div className="flex items-center gap-2 p-2 border rounded-md shadow">
+            <FcGoogle className="text-2xl" />
             <p className="text-gray-700 text-lg">Google</p>
           </div>
         </footer>

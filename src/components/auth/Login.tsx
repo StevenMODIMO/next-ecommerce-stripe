@@ -41,8 +41,8 @@ export default function Login() {
     }
   };
   return (
-    <div className="max-w-7xl mx-auto text-gray-800 px-4 sm:px-12 lg:px-16">
-      <section className="flex flex-col gap-1 shadow rounded p-3">
+    <div className="max-w-7xl mx-auto text-gray-800 px-4 sm:px-12 lg:p-8 lg:px-16">
+      <section className="flex flex-col gap-1 shadow rounded p-3 sm:w-[70%] sm:mx-auto lg:w-[40%]">
         <header className="font-medium text-center text-xl">
           <h1>Sign In to Continue</h1>
         </header>
