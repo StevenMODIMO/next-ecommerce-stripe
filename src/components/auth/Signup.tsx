@@ -3,9 +3,17 @@ import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { MdAlternateEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { FaEye, FaRegEyeSlash } from "react-icons/fa";
-import { CiImageOn } from "react-icons/ci";
+import {
+  FaEye,
+  FaRegEyeSlash,
+  FaCheckCircle,
+  FaImage,
+  FaFacebook,
+} from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { FaXTwitter } from "react-icons/fa6";
+import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -35,10 +43,18 @@ export default function Signup() {
       setError(json.error);
       setLoading(false);
     } else {
+      console.log(json);
       setError(null);
       setPassword("");
       setEmail("");
       setAvatar(null);
+      await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+        callbackUrl: process.env.BASE_URL as string,
+      });
+      router.push("/products");
     }
   };
 
@@ -51,13 +67,13 @@ export default function Signup() {
   return (
     <div className="max-w-7xl mx-auto text-gray-800 px-4 sm:px-12 lg:px-16">
       <section className="flex flex-col gap-1 shadow rounded p-3">
-        <header className="font-medium text-center text-lg">
+        <header className="font-medium text-center text-xl">
           <h1>Create account to get started</h1>
         </header>
         <form
           onSubmit={handleSubmit}
           onFocus={() => setError(null)}
-          className="flex flex-col gap-3 my-4 w-64 mx-auto"
+          className="flex flex-col gap-3 my-4 "
         >
           <label className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
@@ -65,7 +81,9 @@ export default function Signup() {
               <span>Email address</span>
             </div>
             <input
-              className="p-2 outline-none border rounded w-full"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="p-2 outline-none border rounded"
               placeholder="example@gmail.com"
             />
           </label>
@@ -87,29 +105,71 @@ export default function Signup() {
               </div>
             </section>
             <input
-              className="p-2 outline-none border rounded w-full"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="p-2 outline-none border rounded"
               placeholder="Your strong password"
               type={showPassword ? "text" : "password"}
             />
           </label>
           <label className="flex items-center gap-1">
-            <CiImageOn className="text-[#E27210]" />
-            <span>Upload Avatar</span>
+            {avatar ? (
+              <FaCheckCircle className="text-[#E27210]" />
+            ) : (
+              <FaImage className="text-[#E27210]" />
+            )}
+            {avatar ? <span>Avatar Uploaded</span> : <span>Upload Avatar</span>}
             <input
               type="file"
               className="hidden"
               onChange={handleImageChange}
             />
           </label>
-          <button className="text-white bg-[#E27210] rounded p-2 w-fit mx-auto">
-            Create account
+          <button
+            className={
+              !loading
+                ? "flex items-center justify-center text-white bg-[#E27210] rounded p-2 w-fit mx-auto"
+                : "text-white bg-[#E27210] rounded p-2 w-fit mx-auto"
+            }
+          >
+            {loading ? (
+              <span className="flex items-center justify-center gap-1">
+                <span className="animate-spin h-5 w-5 rounded-full border-4 border-t-transparent border-white"></span>
+                <span>processing...</span>
+              </span>
+            ) : (
+              <span>Create account</span>
+            )}
           </button>
           {error && (
-            <div className="text-white bg-red-500 p-2 rounded w-fit mx-auto">
+            <div className="text-white bg-red-500 p-2 rounded text-center">
               {error}
             </div>
           )}
+          <div className="text-sm text-gray-800 font-medium my-2">
+            <span>Already have an account ? </span>
+            <Link href="/login" className="text-gray-700 underline">
+              Sign In
+            </Link>
+          </div>
         </form>
+        <div className="my-5 py-4 text-gray-800 text-center border-y text-base font-medium">
+          or continue with
+        </div>
+        <footer className="my-2 flex flex-col gap-2">
+          <div className="flex items-center gap-1 p-2 border rounded-md">
+            <FaFacebook />
+            <p className="text-gray-700 text-lg">Facebook</p>
+          </div>
+          <div className="flex items-center gap-1 p-2 border rounded-md">
+            <FaXTwitter />
+            <p className="text-gray-700 text-lg">Twitter</p>
+          </div>
+          <div className="flex items-center gap-1 p-2 border rounded-md">
+            <FcGoogle />
+            <p className="text-gray-700 text-lg">Google</p>
+          </div>
+        </footer>
       </section>
     </div>
   );
