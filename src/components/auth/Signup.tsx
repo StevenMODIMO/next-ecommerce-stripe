@@ -52,7 +52,7 @@ export default function Signup() {
         email,
         password,
         redirect: false,
-        callbackUrl: process.env.BASE_URL as string,
+        callbackUrl: process.env.NEXT_PUBLIC_BASE_URL as string,
       });
       router.push("/products");
     }

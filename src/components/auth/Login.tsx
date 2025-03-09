@@ -24,7 +24,7 @@ export default function Login() {
       email,
       password,
       redirect: false,
-      callbackUrl: process.env.BASE_URL as string,
+      callbackUrl: process.env.NEXT_PUBLIC_BASE_URL as string,
     });
 
     if (response?.error) {
