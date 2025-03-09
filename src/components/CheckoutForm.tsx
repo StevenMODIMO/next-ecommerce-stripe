@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   PaymentElement,
   useStripe,
@@ -7,6 +7,7 @@ import {
   Elements,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import CheckoutProducts from "./CheckoutProducts";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
@@ -28,7 +29,7 @@ function CheckoutForm() {
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${process.env.BASE_URL}/checkout`,
+        return_url: `${process.env.BASE_URL}/checkout/success`,
       },
       redirect: "if_required",
     });
@@ -43,7 +44,10 @@ function CheckoutForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded-lg shadow-md">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4 p-4 border rounded-lg shadow-md"
+    >
       <PaymentElement options={{ layout: "accordion" }} />
       <button
         type="submit"
@@ -52,47 +56,51 @@ function CheckoutForm() {
       >
         {loading ? "Processing..." : "Pay Now"}
       </button>
-      {message && <p className="text-red-600 mt-2">{message}</p>}
+      {message && <p className="text-gray-600 mt-2">{message}</p>}
     </form>
   );
 }
 
 export default function CheckoutWrapper() {
   const [clientSecret, setClientSecret] = useState("");
+  const [subtotal, setSubtotal] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const createPaymentIntent = async () => {
-      try {
-        const res = await fetch("/api/checkout", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amount: 5000, // Example: $50.00 (Stripe accepts amounts in cents)
-            currency: "usd",
-          }),
-        });
+  const handleProceedToPayment = async (subtotal: number) => {
+    setLoading(true);
+    setSubtotal(subtotal);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: subtotal * 100, currency: "usd" }),
+      });
 
-        const data = await res.json();
-        if (data.clientSecret) {
-          setClientSecret(data.clientSecret);
-        } else {
-          console.error("Failed to get clientSecret", data);
-        }
-      } catch (error) {
-        console.error("Error fetching payment intent:", error);
+      const data = await res.json();
+      if (data.clientSecret) {
+        setClientSecret(data.clientSecret);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        console.error("Failed to get clientSecret", data);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching payment intent:", error);
+    }
+  };
 
-    createPaymentIntent();
-  }, []);
-
-  return clientSecret ? (
-    <Elements stripe={stripePromise} options={{ clientSecret }}>
-      <CheckoutForm />
-    </Elements>
-  ) : (
-    <p>Loading payment details...</p>
+  return (
+    <div>
+      {!clientSecret ? (
+        <CheckoutProducts
+          onProceed={handleProceedToPayment}
+          loading={loading}
+        />
+      ) : (
+        <Elements stripe={stripePromise} options={{ clientSecret }}>
+          <CheckoutForm />
+        </Elements>
+      )}
+    </div>
   );
 }

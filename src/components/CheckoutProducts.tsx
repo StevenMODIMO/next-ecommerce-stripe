@@ -2,8 +2,7 @@
 import { useState, useEffect } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { CgMenuGridO } from "react-icons/cg";
-import { FaPlus } from "react-icons/fa6";
-import { FaMinus } from "react-icons/fa";
+import { FaPlus, FaMinus } from "react-icons/fa6";
 
 interface Product {
   product_id: string;
@@ -12,22 +11,26 @@ interface Product {
   price: string;
 }
 
-export default function CheckoutProducts() {
+export default function CheckoutProducts({
+  onProceed,
+  loading,
+}: {
+  onProceed: (subtotal: number) => void;
+  loading: boolean;
+}) {
   const [products, setProducts] = useState<Product[]>([]);
   const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
 
   useEffect(() => {
-    const getProducts = () => {
-      const prods: Product[] = JSON.parse(localStorage.getItem("cart") || "[]");
-      setProducts(prods);
-      // Initialize quantity for each product (default to 1)
-      const initialQuantities = prods.reduce((acc, product) => {
-        acc[product.product_id] = 1;
-        return acc;
-      }, {} as { [key: string]: number });
-      setQuantities(initialQuantities);
-    };
-    getProducts();
+    const prods: Product[] = JSON.parse(localStorage.getItem("cart") || "[]");
+    setProducts(prods);
+
+    const initialQuantities = prods.reduce((acc, product) => {
+      acc[product.product_id] = 1;
+      return acc;
+    }, {} as { [key: string]: number });
+
+    setQuantities(initialQuantities);
   }, []);
 
   const handleDelete = (id: string) => {
@@ -36,7 +39,6 @@ export default function CheckoutProducts() {
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     window.dispatchEvent(new Event("cartUpdated"));
 
-    // Remove quantity tracking for deleted product
     const updatedQuantities = { ...quantities };
     delete updatedQuantities[id];
     setQuantities(updatedQuantities);
@@ -49,14 +51,13 @@ export default function CheckoutProducts() {
     setQuantities((prevQuantities) => {
       const newQuantity =
         operation === "increase"
-          ? Math.min(prevQuantities[id] + 1, 5) // Max 5
-          : Math.max(prevQuantities[id] - 1, 1); // Min 1
+          ? Math.min(prevQuantities[id] + 1, 5)
+          : Math.max(prevQuantities[id] - 1, 1);
 
       return { ...prevQuantities, [id]: newQuantity };
     });
   };
 
-  // Calculate subtotal of all products
   const subtotal = products.reduce(
     (sum, { product_id, price }) =>
       sum + parseFloat(price) * (quantities[product_id] || 1),
@@ -123,10 +124,23 @@ export default function CheckoutProducts() {
           );
         })}
       </section>
-      <section className="flex justify-end px-2 lg:px-4 py-4 border-t-2 border-gray-300">
+      <section className="flex justify-between px-2 lg:px-4 py-4 border-t-2 border-gray-300">
         <p className="text-gray-900 text-lg font-semibold">
           Subtotal: ${subtotal.toFixed(2)}
         </p>
+        {!loading ? (
+          <button
+            onClick={() => onProceed(subtotal)}
+            className="bg-green-600 text-white px-4 py-2 rounded"
+          >
+            Proceed to Payment
+          </button>
+        ) : (
+          <div className="p-2 rounded text-white font-medium bg-green-500 flex items-center justify-center gap-2">
+            <div className="animate-spin rounded-full border-4 border-t-transparent h-5 w-5 border-white"></div>
+            <div>Processing</div>
+          </div>
+        )}
       </section>
     </div>
   );
