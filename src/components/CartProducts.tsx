@@ -1,9 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import {
-  MdDeleteOutline,
-  MdShoppingCart,
-} from "react-icons/md";
+import { MdDeleteOutline, MdShoppingCart } from "react-icons/md";
 import { CgMenuGridO } from "react-icons/cg";
 import Link from "next/link";
 
@@ -35,19 +32,16 @@ export default function CartProducts() {
   return (
     <div>
       {products.length === 0 ? (
-        <section className="w-full">
+        <section className="w-full flex flex-col justify-center">
           <header className="flex flex-col items-center gap-3 justify-center my-10">
             <div className="bg-gray-100 rounded-full flex items-center justify-center p-6">
-              <MdShoppingCart className="h-32 w-32 text-[#E27210]" />
+              <MdShoppingCart className="h-32 w-32 text-[#E27210] animate-pulse" />
             </div>
             <p className="text-gray-600 font-medium">Your cart is empty</p>
           </header>
-          <Link
-            href="/products"
-            className="w-fit p-2 mx-auto my-4 rounded bg-[#E27210] text-white cursor-pointer"
-          >
-            Continue shopping
-          </Link>
+          <button className="w-fit p-2 mx-auto my-4 rounded bg-[#E27210] text-white cursor-pointer">
+            <Link href="/products">Continue shopping</Link>
+          </button>
         </section>
       ) : (
         <section className="flex flex-col gap-3 py-3 px-2 lg:px-4 lg:py-6">
