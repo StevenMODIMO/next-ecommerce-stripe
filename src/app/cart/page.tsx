@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import CartProducts from "@/components/CartProducts";
+import Footer from "@/components/Footer"
 
 export const metadata: Metadata = {
   title: "My Cart",
@@ -12,6 +13,7 @@ export default function Cart() {
         <p>Cart View</p>
       </header>
       <CartProducts />
+      <Footer />
     </main>
   );
 }

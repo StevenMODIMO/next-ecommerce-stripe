@@ -30,12 +30,12 @@ export default function CartProducts() {
   };
 
   return (
-    <div>
+    <div className="p-4">
       {products.length === 0 ? (
         <section className="w-full flex flex-col justify-center">
           <header className="flex flex-col items-center gap-3 justify-center my-10">
             <div className="bg-gray-100 rounded-full flex items-center justify-center p-6">
-              <MdShoppingCart className="h-32 w-32 text-[#E27210] animate-pulse" />
+              <MdShoppingCart className="h-32 w-32 text-[#E27210]" />
             </div>
             <p className="text-gray-600 font-medium">Your cart is empty</p>
           </header>
@@ -44,51 +44,72 @@ export default function CartProducts() {
           </button>
         </section>
       ) : (
-        <section className="flex flex-col gap-3 py-3 px-2 lg:px-4 lg:py-6">
-          {products.map(
-            ({ product_id, product_name, product_image, price }) => {
-              return (
-                <div
-                  key={product_id}
-                  className="flex items-center justify-between p-2 bg-gray-100 rounded"
-                >
-                  <div className="flex gap-2 items-center">
-                    <CgMenuGridO className="text-xl text-[#E27210]" />
-                    <section className="flex items-end gap-2">
+        <section className="overflow-x-auto">
+          <table className="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-200 text-left">
+                <th className="border border-gray-300 px-4 py-2">Product</th>
+                <th className="border border-gray-300 px-4 py-2">Name</th>
+                <th className="border border-gray-300 px-4 py-2">Price</th>
+                <th className="border border-gray-300 px-4 py-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map(
+                ({ product_id, product_name, product_image, price }) => (
+                  <tr key={product_id} className="odd:bg-gray-50 even:bg-white">
+                    <td className="border border-gray-300 px-4 py-2 flex items-center gap-2">
+                      <CgMenuGridO className="text-xl text-[#E27210]" />
                       <img
                         src={product_image}
                         alt={product_name}
-                        className="w-20 h-20 lg:w-24 lg:h-24 lg:rounded-full"
+                        className="w-12 h-12 lg:w-16 lg:h-16 rounded"
                       />
-                      <div className="flex flex-col gap-2">
-                        <p className="text-gray-800 text-sm font-medium sm:text-lg md:text-xl lg:text-2xl">
-                          {product_name}
-                        </p>
-                        <p className="text-gray-700 text-xs font-medium sm:text-sm lg:text-lg">
-                          Price: ${price}
-                        </p>
-                      </div>
-                    </section>
-                  </div>
-                  <div className="p-2 hover:bg-gray-200 cursor-pointer rounded-full">
-                    <MdDeleteOutline
-                      onClick={() => handleDelete(product_id)}
-                      className="text-2xl text-[#E27210] lg:text-3xl"
-                    />
-                  </div>
-                </div>
-              );
-            }
-          )}
-          {products.length > 0 && (
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2 font-medium text-gray-800">
+                      {product_name}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2 text-green-500 font-medium">
+                      ${price}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2 text-center">
+                      <button
+                        onClick={() => handleDelete(product_id)}
+                        className="p-2 hover:bg-gray-200 cursor-pointer rounded-full"
+                      >
+                        <MdDeleteOutline className="text-2xl text-[#E27210] lg:text-3xl" />
+                      </button>
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+        </section>
+      )}
+      {products.length > 0 && (
+        <div className="my-4">
+          <form className="flex flex-col gap-1 rounded shadow-lg p-2">
+            <header className="text-sm font-medium text-gray-800 border-b border-gray-800">
+              <h1>Use discount code</h1>
+            </header>
+            <input
+              placeholder="Enter coupon code"
+              className="p-2 rounded outline-none border"
+            />
+            <button className="border-2 border-[#E27210] p-1 rounded text-gray-800 font-medium">
+              Apply
+            </button>
+          </form>
+          <div className="flex justify-end px-6 sm:px-16 lg:py-6 lg:px-28">
             <Link
               href="/checkout"
-              className="flex gap-2 items-center w-fit mx-auto my-3 p-2 rounded bg-[#E27210] text-white"
+              className="flex p-2 text-gray-800 rounded border-2 border-[#E27210] hover:bg-[#E27210] hover:text-white"
             >
               <span>Checkout</span>
             </Link>
-          )}
-        </section>
+          </div>
+        </div>
       )}
     </div>
   );
