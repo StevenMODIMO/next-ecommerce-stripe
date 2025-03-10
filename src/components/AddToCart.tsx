@@ -1,4 +1,5 @@
 "use client";
+import { MdAddShoppingCart } from "react-icons/md";
 
 interface CartProps {
   product_id: string;
@@ -30,7 +31,10 @@ export default function AddToCart({
 
   return (
     <div>
-      <button onClick={handleAddToCart}>Add to cart</button>
+      <button className="flex items-center justify-center gap-1 p-1 rounded border-2 border-[#E27210] text-gray-800 font-medium" onClick={handleAddToCart}>
+        <MdAddShoppingCart className="text-[#E27210]" />
+        <span>Add to cart</span>
+      </button>
     </div>
   );
 }

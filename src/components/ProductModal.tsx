@@ -22,12 +22,6 @@ export default function ProductModal({ children }: ProductModalProps) {
         transition={{ duration: 0.5, ease: "easeInOut" }}
         onClick={(e) => e.stopPropagation()}
       >
-        <header
-          onClick={() => router.back()}
-          className="p-2 text-xl text-gray-400 cursor-pointer flex justify-end rotate-90 sm:text-2xl"
-        >
-          <IoIosArrowBack />
-        </header>
         {children}
       </motion.div>
     </div>

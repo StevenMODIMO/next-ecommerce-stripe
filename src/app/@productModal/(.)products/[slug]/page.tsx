@@ -41,21 +41,23 @@ export default async function Product({ params }: { params: Params }) {
             className="w-full h-auto rounded-lg"
           />
           <div className="flex flex-col justify-between">
-            <h1 className="text-2xl font-semibold text-gray-800">
+            <h1 className="text-2xl font-semibold text-gray-800 sm:text-3xl">
               {data.product_name}
             </h1>
-            <p className="text-gray-700 mt-2">{data.product_description}</p>
+            <p className="text-gray-600 font-medium mt-2 text-sm sm:text-lg">
+              {data.product_description}
+            </p>
 
-            <div className="mt-4">
+            <div className="mt-4 flex justify-between items-center">
               <span className="text-lg font-bold text-[#E27210]">
                 ${data.price}
               </span>
-              <span className="ml-3 text-gray-600">
+              <span className="ml-3 text-green-500 text-xs sm:text-sm">
                 ({data.quantity} in stock)
               </span>
             </div>
 
-            <p className="text-sm text-gray-600 mt-2">
+            <p className="text-[10px] bg-gray-100 w-fit rounded p-1 mt-2 sm:text-sm">
               Category: {data.product_category}
             </p>
             <div className="mt-6">
