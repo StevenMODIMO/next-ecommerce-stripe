@@ -7,9 +7,7 @@ import {
 } from "react-icons/md";
 import { FaBinoculars } from "react-icons/fa";
 import Loading from "@/app/loading";
-import Link from "next/link";
-import { motion } from "motion/react";
-import { IoEyeOutline, IoCartOutline } from "react-icons/io5"; // Import framer-motion
+import Link from "next/link";// Import framer-motion
 
 interface Product {
   product_id: number;
@@ -99,7 +97,7 @@ export default function ProductListings() {
         {products.length === 0 ? (
           <Loading />
         ) : (
-          <div className="flex gap-4 overflow-hidden p-4">
+          <div className="flex gap-4 overflow-hidden p-2">
             {products
               .slice(currentIndex, currentIndex + itemsToShow)
               .concat(
@@ -111,7 +109,7 @@ export default function ProductListings() {
               .map((product) => (
                 <div
                   key={product.product_id}
-                  className="bg-white shadow-md rounded p-6 flex flex-col items-center w-full sm:w-[30%] lg:w-[24%] relative group"
+                  className="bg-white shadow-md rounded flex flex-col items-center w-full p-4 sm:w-[30%] lg:w-[24%]"
                 >
                   <Link
                     href={`/products/${product.product_id}`}
@@ -120,43 +118,23 @@ export default function ProductListings() {
                     <img
                       src={product.product_image}
                       alt={product.product_name}
-                      className="w-full h-32 object-cover rounded-md"
+                      className="w-full h-48 object-cover rounded-md"
                     />
-                    <h3 className="text-md font-semibold mt-2 text-gray-800">
+                    <h3 className="text-lg font-semibold mt-2 text-gray-800">
                       {product.product_name}
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm font-semibold text-gray-600">
                       {product.product_category}
                     </p>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between items-center">
                       <p className="text-lg font-bold text-[#E27210]">
                         ${product.price}
                       </p>
-                      <p className="text-green-500">
+                      <p className="text-green-500 text-xs lg:text-sm">
                         ({product.quantity} in stock)
                       </p>
                     </div>
                   </Link>
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/10 rounded-b opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="flex justify-between p-1">
-                      <Link href={`/products/${product.product_id}`}>
-                        <motion.div
-                          className="text-white rounded-full p-2 cursor-pointer"
-                          whileHover={{ scale: 1.2 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <IoEyeOutline className="text-2xl text-[#E27210]" />
-                        </motion.div>
-                      </Link>
-                      <motion.div
-                        className="text-white rounded-full p-2 cursor-pointer"
-                        whileHover={{ scale: 1.2 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <IoCartOutline className="text-2xl text-[#E27210]" />
-                      </motion.div>
-                    </div>
-                  </div>
                 </div>
               ))}
           </div>

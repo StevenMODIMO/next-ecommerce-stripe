@@ -2,11 +2,6 @@
 import Image from "next/image";
 import logo from "@/app/assets/cart-logo.svg";
 import { IoCartOutline } from "react-icons/io5";
-import {
-  IoIosNotificationsOutline,
-  IoIosSearch,
-  IoMdHeartEmpty,
-} from "react-icons/io";
 import { MdOutlineAccountCircle, MdOutlineNewLabel } from "react-icons/md";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Link from "next/link";
@@ -38,7 +33,7 @@ export default function Header() {
     return () => window.removeEventListener("cartUpdated", updateCartCount);
   }, []);
   return (
-    <nav className="fixed left-0 top-0 w-full flex justify-between p-3 border-b-2 z-[50] sm:z-50 text-gray-700 bg-white">
+    <nav className="fixed left-0 top-0 w-full flex justify-between p-3 z-[50] sm:z-50 text-gray-700 bg-white">
       <header className="relative w-96">
         <Link href="/">
           <Image
@@ -83,18 +78,6 @@ export default function Header() {
             {cartCount}
           </p>
         </Link>
-        {/* <div className="relative">
-          <IoIosNotificationsOutline className="text-2xl" />
-          <p className="absolute -top-1 -right-2 text-xs bg-[#E27210] rounded-full text-white w-4 h-4 tflex text-center">
-            0
-          </p>
-        </div>
-        <div className="relative">
-          <IoMdHeartEmpty className="text-2xl" />
-          <p className="absolute -top-1 -right-2 text-xs bg-[#E27210] rounded-full text-white w-4 h-4 tflex text-center">
-            0
-          </p>
-        </div> */}
         <div>
           <MdOutlineAccountCircle className="text-2xl" />
         </div>

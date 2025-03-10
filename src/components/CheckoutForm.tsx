@@ -56,7 +56,7 @@ function CheckoutForm() {
       >
         {loading ? "Processing..." : "Pay Now"}
       </button>
-      {message && <p className="text-gray-600 mt-2">{message}</p>}
+      {message && <p className="text-red-500 mt-2">{message}</p>}
     </form>
   );
 }
