@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Cart() {
   return (
-    <main>
+    <main className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-12 md:shadow-lg md:rounded md:max-w-5xl">
       <header className="text-2xl p-2 text-center font-medium text-gray-800">
         <p>Cart View</p>
       </header>

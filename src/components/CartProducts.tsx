@@ -48,10 +48,18 @@ export default function CartProducts() {
           <table className="w-full border-collapse border border-gray-300">
             <thead>
               <tr className="bg-gray-200 text-left">
-                <th className="border border-gray-300 px-4 py-2">Product</th>
-                <th className="border border-gray-300 px-4 py-2">Name</th>
-                <th className="border border-gray-300 px-4 py-2">Price</th>
-                <th className="border border-gray-300 px-4 py-2">Action</th>
+                <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                  Thumbnail
+                </th>
+                <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                  Name
+                </th>
+                <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                  Price
+                </th>
+                <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -88,25 +96,28 @@ export default function CartProducts() {
         </section>
       )}
       {products.length > 0 && (
-        <div className="my-4">
-          <form className="flex flex-col gap-1 rounded shadow-lg p-2">
-            <header className="text-sm font-medium text-gray-800 border-b border-gray-800">
+        <div className="my-4 sm:flex sm:flex-col sm:gap-2 sm:justify-between lg:flex-row">
+          <form className="flex flex-col gap-1 rounded shadow p-4 lg:gap-3 lg:p-2 sm:flex-row sm:items-center">
+            <header className="text-sm font-medium text-gray-800">
               <h1>Use discount code</h1>
             </header>
             <input
-              placeholder="Enter coupon code"
-              className="p-2 rounded outline-none border"
+              className="p-2 rounded outline-none border uppercase"
+              placeholder="ery7d"
             />
-            <button className="border-2 border-[#E27210] p-1 rounded text-gray-800 font-medium">
+            <button
+              disabled
+              className="w-fit mx-auto border-2 border-[#E27210] p-1 rounded text-gray-800 font-medium"
+            >
               Apply
             </button>
           </form>
-          <div className="flex justify-end px-6 sm:px-16 lg:py-6 lg:px-28">
+          <div className="flex justify-end my-3 px-6 sm:px-16 lg:py-6 lg:px-28">
             <Link
               href="/checkout"
-              className="flex p-2 text-gray-800 rounded border-2 border-[#E27210] hover:bg-[#E27210] hover:text-white"
+              className="flex text-gray-800 border-b-2 border-[#E27210] hover:bg-[#E27210] lg:p-2 hover:rounded hover:text-white transition-all duration-100 ease-in-out"
             >
-              <span>Checkout</span>
+              <span>Proceed to checkout</span>
             </Link>
           </div>
         </div>
