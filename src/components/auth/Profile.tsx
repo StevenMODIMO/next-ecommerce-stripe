@@ -1,10 +1,15 @@
 "use client";
+import React from "react";
 import { signOut, useSession } from "next-auth/react";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { motion } from "motion/react";
 import Link from "next/link";
 
-export default function Profile() {
+interface ProfileProps {
+  setShowProfile: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function Profile({ setShowProfile }: ProfileProps) {
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -50,6 +55,7 @@ export default function Profile() {
           className="absolute right-0 mt-2 w-64 rounded-lg shadow-lg bg-white border border-gray-200 p-4"
         >
           <Link
+            onClick={() => setShowProfile(false)}
             href="/login"
             className="w-fit mx-auto rounded text-[#E27210] p-2"
           >

@@ -81,9 +81,12 @@ export default function Header() {
           </p>
         </Link>
         <div className="relative">
-          <MdOutlineAccountCircle className="text-2xl" onClick={() => setShowProfile(!showProfile)} />
+          <MdOutlineAccountCircle
+            className="text-2xl cursor-pointer"
+            onClick={() => setShowProfile(!showProfile)}
+          />
           <AnimatePresence>
-          {showProfile && <Profile />}
+            {showProfile && <Profile setShowProfile={setShowProfile} />}
           </AnimatePresence>
         </div>
         <div onClick={() => setShowLinks(true)} className="lg:hidden">
