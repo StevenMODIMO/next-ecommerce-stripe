@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("All fields must be filled");
         }
 
-        const userResult = await query("SELECT * FROM users WHERE email=$1", [
+        const userResult = await query("SELECT user_id AS id, email, password, avatar FROM users WHERE email=$1", [
           email,
         ]);
 
@@ -55,6 +55,7 @@ export const authOptions: NextAuthOptions = {
         return {
           ...token,
           id: user.id,
+          image: user.avatar
         };
       }
       return token;
@@ -65,6 +66,7 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           id: token.id,
+          image: token.image
         },
       };
     },

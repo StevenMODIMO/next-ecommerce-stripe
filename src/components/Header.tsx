@@ -15,10 +15,12 @@ import {
 } from "react-icons/md";
 import { BiSolidLogIn } from "react-icons/bi";
 import { AnimatePresence } from "motion/react";
+import Profile from "./auth/Profile";
 
 export default function Header() {
   const [showLinks, setShowLinks] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [showProfile, setShowProfile] = useState(false);
 
   useEffect(() => {
     const updateCartCount = () => {
@@ -78,8 +80,11 @@ export default function Header() {
             {cartCount}
           </p>
         </Link>
-        <div>
-          <MdOutlineAccountCircle className="text-2xl" />
+        <div className="relative">
+          <MdOutlineAccountCircle className="text-2xl" onClick={() => setShowProfile(!showProfile)} />
+          <AnimatePresence>
+          {showProfile && <Profile />}
+          </AnimatePresence>
         </div>
         <div onClick={() => setShowLinks(true)} className="lg:hidden">
           <FaBars className="text-2xl" />
