@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { GoSidebarCollapse } from "react-icons/go";
 import Link from "next/link";
+import Loading from "@/app/loading";
+import { motion } from "motion/react";
 
 interface Category {
   id: number;
@@ -66,7 +68,7 @@ export default function CategoryFilter() {
   }, [searchParams]);
 
   return (
-    <div className="flex flex-col gap-3 md:flex-row">
+    <div className="flex flex-col gap-3 mb-4 md:flex-row">
       <section className="flex flex-col gap-1 shadow rounded-md md:h-fit md:w-[30%] lg:w-[20%]">
         <header className="flex justify-between items-center p-2">
           <h2 className="font-medium text-gray-800">Filters:</h2>
@@ -100,24 +102,39 @@ export default function CategoryFilter() {
           ))}
         </div>
       </section>
-      <div className="md:w-[70%]">
-        <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
+      <div className="md:w-[70%] lg:w-full">
+        <ul className="grid grid-cols-1 gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-2">
           {products.length > 0 ? (
             products.map((product: any) => (
-              <Link
-                href={`/products/${product.product_id}`}
+              <motion.div
                 key={product.product_id}
+                initial={{ opacity: 0.8 }}
+                animate={{ opacity: 1 }}
               >
-                <img src={product.product_image} />
-                <p>{product.product_name}</p>
-                <div>
-                  <p>${product.price}</p>
-                  <p>({product.quantity} in stock)</p>
-                </div>
-              </Link>
+                <Link
+                  href={`/products/${product.product_id}`}
+                  className="w-[90%] p-2 mx-auto shadow-md rounded"
+                >
+                  <img
+                    src={product.product_image}
+                    className="w-44 h-44 mx-auto"
+                  />
+                  <p className="text-lg font-semibold mt-2 text-gray-800">
+                    {product.product_name}
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <p className="text-lg text-[#E27210] font-bold">
+                      ${product.price}
+                    </p>
+                    <p className="text-sm text-green-500 font-medium">
+                      ({product.quantity} in stock)
+                    </p>
+                  </div>
+                </Link>
+              </motion.div>
             ))
           ) : (
-            <p>No products found.</p>
+            <Loading />
           )}
         </ul>
       </div>

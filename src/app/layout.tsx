@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${nunito.className} bg-white`}>
+      <body className={`${nunito.className} bg-gradient-to-br from-gray-50 to-orange-50`}>
         <SessionWrapper>
           <Header />
           <div className="pt-[60px]">

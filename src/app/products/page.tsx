@@ -11,8 +11,13 @@ export const metadata: Metadata = {
 
 export default function page() {
   return (
-    <div className="w-full py-8">
+    <div className="w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-16">
+        <header className="p-3">
+          <h1 className="text-2xl font-bold text-gray-800">
+            Explore all products
+          </h1>
+        </header>
         <Suspense fallback={<Loading />}>
           <ProductFilter />
         </Suspense>

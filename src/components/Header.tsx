@@ -37,7 +37,7 @@ export default function Header() {
   }, []);
 
   return (
-    <nav className="fixed left-0 top-0 w-full flex justify-between p-3 z-[50] sm:z-50 text-gray-700 bg-white">
+    <nav className="fixed left-0 top-0 w-full flex justify-between p-3 z-[50] sm:z-50 text-gray-700 bg-gradient-to-br from-gray-50 to-[#fff7ef]">
       <header className="relative w-96">
         <Link href="/">
           <Image
