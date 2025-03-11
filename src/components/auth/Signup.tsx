@@ -157,11 +157,11 @@ export default function Signup() {
           or continue with
         </div>
         <footer className="my-2 flex flex-col gap-2">
-          <div className="flex items-center gap-2 p-2 border rounded-md bg-blue-500">
+          <div className="flex items-center gap-2 p-2 border rounded-md shadow">
             <FaFacebook className="text-2xl text-white" />
             <p className="text-white text-lg">Facebook</p>
           </div>
-          <div className="flex items-center gap-2 p-2 border rounded-md bg-black/90">
+          <div className="flex items-center gap-2 p-2 border rounded-md shadow">
             <FaXTwitter className="text-2xl text-white" />
             <p className="text-white text-lg">Twitter</p>
           </div>

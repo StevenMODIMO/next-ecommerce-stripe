@@ -120,15 +120,15 @@ export default function Login() {
           or continue with
         </div>
         <footer className="my-2 flex flex-col gap-2">
-          <div className="flex items-center gap-1 p-2 border rounded-md">
+          <div className="flex items-center gap-1 p-2 border rounded-md shadow">
             <FaFacebook />
             <p className="text-gray-700 text-lg">Facebook</p>
           </div>
-          <div className="flex items-center gap-1 p-2 border rounded-md">
+          <div className="flex items-center gap-1 p-2 border rounded-md shadow">
             <FaXTwitter />
             <p className="text-gray-700 text-lg">Twitter</p>
           </div>
-          <div className="flex items-center gap-1 p-2 border rounded-md">
+          <div className="flex items-center gap-1 p-2 border rounded-md shadow">
             <FcGoogle />
             <p className="text-gray-700 text-lg">Google</p>
           </div>
