@@ -64,6 +64,7 @@ export default function Banner() {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           className="flex flex-col gap-4"
         >
+          <h1 className="text-gray-800 text-3xl font-medium md:text-4xl">Our best offer!!</h1>
           <h1 className="text-gray-800 text-2xl font-medium">
             {product.product_name}
           </h1>
