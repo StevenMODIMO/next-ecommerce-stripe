@@ -5,6 +5,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
 import Loading from "@/app/loading";
 import AddToCart from "./AddToCart";
+import Typewriter from "./Typewriter";
 
 interface Product {
   product_id: string;
@@ -64,7 +65,7 @@ export default function Banner() {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           className="flex flex-col gap-4"
         >
-          <h1 className="text-gray-800 text-3xl font-medium md:text-4xl">Our best offer!!</h1>
+          <Typewriter />
           <h1 className="text-gray-800 text-2xl font-medium">
             {product.product_name}
           </h1>
@@ -73,7 +74,12 @@ export default function Banner() {
           </p>
           <span className="text-green-500 text-base">${product.price}</span>
           <div className="flex gap-2 items-center justify-between text-base">
-            <Link href={`/products/${product.product_id}`} className="bg-gray-800 text-white p-1 rounded font-medium">View Product</Link>
+            <Link
+              href={`/products/${product.product_id}`}
+              className="bg-gray-800 text-white p-1 rounded font-medium"
+            >
+              View Product
+            </Link>
             <AddToCart
               product_id={product.product_id}
               product_name={product.product_name}
