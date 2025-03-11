@@ -40,48 +40,39 @@ export default function Banner() {
   }, []);
 
   if (!product) {
-    return (
-        <Loading />
-    );
+    return <Loading />;
   }
 
   return (
-    <section className="relative w-full bg-gray-100 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-16 flex flex-col lg:flex-row items-center gap-8">
+    <section>
+      <div className="max-w-7xl mx-auto px-4 sm:px-12 lg;px-16 shadow-lg rounded-md flex flex-col gap-3">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="w-full lg:w-1/2"
+          className="w-1/2 mx-auto"
         >
           <img
             src={product.large_image || product.product_image}
             alt={product.product_name}
-            className="w-full h-[350px] object-cover rounded-2xl shadow-lg"
           />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-          className="w-full lg:w-1/2 flex flex-col gap-4"
         >
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
+          <h1 className="text-gray-800 text-xl font-medium">
             {product.product_name}
           </h1>
-          <p className="text-lg text-gray-600">{product.product_description}</p>
-          <span className="text-[#E27210] text-xl font-semibold">
-            ${product.price}
-          </span>
-          <div className="flex gap-4 mt-4">
-            <Link
-              href={`/products/${product.product_id}`}
-              className="bg-[#E27210] text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#cf6210] transition"
-            >
-              View Product
-            </Link>
+          <p className="text-gray-700 font-medium text-sm">
+            {product.product_description}
+          </p>
+          <span className="text-green-500 text-sm">${product.price}</span>
+          <div className="flex gap-2 items-center">
+            <Link href={`/products/${product.product_id}`}>View Product</Link>
 
-            <button className="flex items-center gap-2 bg-gray-800 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-gray-700 transition">
+            <button className="flex gap-2 p-1 items-center">
               <FaShoppingCart size={20} />
               Add to Cart
             </button>
