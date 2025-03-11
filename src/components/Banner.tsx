@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
 import Loading from "@/app/loading";
+import AddToCart from "./AddToCart";
 
 interface Product {
   product_id: string;
@@ -44,8 +45,8 @@ export default function Banner() {
   }
 
   return (
-    <section>
-      <div className="max-w-7xl mx-auto px-4 sm:px-12 lg;px-16 shadow-lg rounded-md flex flex-col gap-3">
+    <section className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-16">
+      <div className="p-4 rounded-md shadow flex flex-col gap-4 md:flex-row md:items-end">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -61,21 +62,23 @@ export default function Banner() {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+          className="flex flex-col gap-4"
         >
-          <h1 className="text-gray-800 text-xl font-medium">
+          <h1 className="text-gray-800 text-2xl font-medium">
             {product.product_name}
           </h1>
-          <p className="text-gray-700 font-medium text-sm">
+          <p className="text-gray-700 font-medium text-base">
             {product.product_description}
           </p>
-          <span className="text-green-500 text-sm">${product.price}</span>
-          <div className="flex gap-2 items-center">
-            <Link href={`/products/${product.product_id}`}>View Product</Link>
-
-            <button className="flex gap-2 p-1 items-center">
-              <FaShoppingCart size={20} />
-              Add to Cart
-            </button>
+          <span className="text-green-500 text-base">${product.price}</span>
+          <div className="flex gap-2 items-center justify-between text-base">
+            <Link href={`/products/${product.product_id}`} className="bg-gray-800 text-white p-1 rounded font-medium">View Product</Link>
+            <AddToCart
+              product_id={product.product_id}
+              product_name={product.product_name}
+              product_image={product.product_image}
+              price={product.price}
+            />
           </div>
         </motion.div>
       </div>
