@@ -69,7 +69,7 @@ export default function CheckoutProducts({
       <section className="overflow-x-auto">
         <table className="w-full border-collapse border border-gray-300">
           <thead>
-            <tr className="bg-gray-200 text-left">
+            <tr className="bg-gray-50 text-left">
               <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
                 Thumbnail
               </th>
@@ -80,10 +80,67 @@ export default function CheckoutProducts({
                 Price
               </th>
               <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                Quantity
+              </th>
+              <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
                 Action
               </th>
             </tr>
           </thead>
+          <tbody>
+            {products.map(
+              ({ product_id, product_name, product_image, price }) => {
+                const totalPrice =
+                  parseFloat(price) * (quantities[product_id] || 1);
+                return (
+                  <tr key={product_id}>
+                    <td className="border border-gray-300 flex items-center gap-2">
+                      <img
+                        src={product_image}
+                        alt={product_name}
+                        className="w-12 h-12 lg:w-16 lg:h-16 rounded"
+                      />
+                    </td>
+                    <td className="border border-gray-300 font-medium text-gray-800">
+                      {product_name}
+                    </td>
+                    <td className="border border-gray-300 text-green-500 font-medium">
+                      ${price}
+                    </td>
+                    <td className="font-medium flex items-center justify-center gap-2">
+                      <div
+                        onClick={() =>
+                          handleQuantityChange(product_id, "decrease")
+                        }
+                        className="w-fit p-2 rounded-full text-white bg-[#E27210]"
+                      >
+                        <FaMinus />
+                      </div>
+                      <div>
+                        {quantities[product_id]}
+                      </div>
+                      <div
+                        onClick={() =>
+                          handleQuantityChange(product_id, "increase")
+                        }
+                        className="w-fit p-2 rounded-full text-white bg-[#E27210]"
+                      >
+                        <FaPlus />
+                      </div>
+                    </td>
+                    <td className="border border-gray-300 text-center">
+                      <button
+                        onClick={() => handleDelete(product_id)}
+                        className="p-2 hover:bg-gray-200 cursor-pointer rounded-full"
+                      >
+                        <MdDeleteOutline className="text-2xl text-[#E27210] lg:text-3xl" />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              }
+            )}
+          </tbody>
         </table>
       </section>
       {/* <section className="flex flex-col gap-3 py-3 px-2 lg:px-4 lg:py-6">

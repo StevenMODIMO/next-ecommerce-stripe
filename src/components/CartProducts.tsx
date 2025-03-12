@@ -47,7 +47,7 @@ export default function CartProducts() {
         <section className="overflow-x-auto">
           <table className="w-full border-collapse border border-gray-300">
             <thead>
-              <tr className="bg-gray-200 text-left">
+              <tr className="bg-gray-50 text-left">
                 <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
                   Thumbnail
                 </th>
