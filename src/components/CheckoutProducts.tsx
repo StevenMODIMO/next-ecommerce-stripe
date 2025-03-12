@@ -66,7 +66,27 @@ export default function CheckoutProducts({
 
   return (
     <div>
-      <section className="flex flex-col gap-3 py-3 px-2 lg:px-4 lg:py-6">
+      <section className="overflow-x-auto">
+        <table className="w-full border-collapse border border-gray-300">
+          <thead>
+            <tr className="bg-gray-200 text-left">
+              <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                Thumbnail
+              </th>
+              <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                Name
+              </th>
+              <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                Price
+              </th>
+              <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                Action
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </section>
+      {/* <section className="flex flex-col gap-3 py-3 px-2 lg:px-4 lg:py-6">
         {products.map(({ product_id, product_name, product_image, price }) => {
           const totalPrice = parseFloat(price) * (quantities[product_id] || 1);
           return (
@@ -123,7 +143,7 @@ export default function CheckoutProducts({
             </div>
           );
         })}
-      </section>
+      </section> */}
       <section className="flex justify-between px-2 lg:px-4 py-4 border-t-2 border-gray-300">
         <p className="text-gray-900 text-lg font-semibold">
           Subtotal: ${subtotal.toFixed(2)}

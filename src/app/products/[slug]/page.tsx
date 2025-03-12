@@ -34,7 +34,7 @@ export default async function Product({ params }: { params: Params }) {
   return (
     <ProductModal>
       <main className="max-w-4xl mx-auto p-6 bg-white rounded-lg">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           <img
             src={data.large_image}
             alt={data.product_name}
