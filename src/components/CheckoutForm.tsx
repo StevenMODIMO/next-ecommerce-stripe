@@ -38,6 +38,7 @@ function CheckoutForm() {
       setMessage(error.message || "An unexpected error occurred.");
     } else if (paymentIntent?.status === "succeeded") {
       setMessage("Payment successful!");
+      localStorage.removeItem("cart");
     }
 
     setLoading(false);
@@ -97,7 +98,18 @@ export default function CheckoutWrapper() {
           loading={loading}
         />
       ) : (
-        <Elements stripe={stripePromise} options={{ clientSecret }}>
+        <Elements
+          stripe={stripePromise}
+          options={{
+            clientSecret,
+            appearance: {
+              theme: "stripe",
+              variables: {
+                colorPrimary: "#e27210",
+              },
+            },
+          }}
+        >
           <CheckoutForm />
         </Elements>
       )}

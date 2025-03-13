@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { CgMenuGridO } from "react-icons/cg";
 import { FaPlus, FaMinus } from "react-icons/fa6";
+import { MdShoppingCart } from "react-icons/md";
+import Link from "next/link";
 
 interface Product {
   product_id: string;
@@ -66,159 +68,116 @@ export default function CheckoutProducts({
 
   return (
     <div>
-      <section className="overflow-x-auto">
-        <table className="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr className="bg-gray-50 text-left">
-              <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
-                Thumbnail
-              </th>
-              <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
-                Name
-              </th>
-              <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
-                Price
-              </th>
-              <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
-                Quantity
-              </th>
-              <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map(
-              ({ product_id, product_name, product_image, price }) => {
-                const totalPrice =
-                  parseFloat(price) * (quantities[product_id] || 1);
-                return (
-                  <tr key={product_id}>
-                    <td className="border border-gray-300 flex items-center gap-2">
-                      <img
-                        src={product_image}
-                        alt={product_name}
-                        className="w-12 h-12 lg:w-16 lg:h-16 rounded"
-                      />
-                    </td>
-                    <td className="border border-gray-300 font-medium text-gray-800">
-                      {product_name}
-                    </td>
-                    <td className="border border-gray-300 text-green-500 font-medium">
-                      ${price}
-                    </td>
-                    <td className="font-medium flex items-center justify-center gap-2">
-                      <div
-                        onClick={() =>
-                          handleQuantityChange(product_id, "decrease")
-                        }
-                        className="w-fit p-2 rounded-full text-white bg-[#E27210]"
-                      >
-                        <FaMinus />
-                      </div>
-                      <div>
-                        {quantities[product_id]}
-                      </div>
-                      <div
-                        onClick={() =>
-                          handleQuantityChange(product_id, "increase")
-                        }
-                        className="w-fit p-2 rounded-full text-white bg-[#E27210]"
-                      >
-                        <FaPlus />
-                      </div>
-                    </td>
-                    <td className="border border-gray-300 text-center">
-                      <button
-                        onClick={() => handleDelete(product_id)}
-                        className="p-2 hover:bg-gray-200 cursor-pointer rounded-full"
-                      >
-                        <MdDeleteOutline className="text-2xl text-[#E27210] lg:text-3xl" />
-                      </button>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
-      </section>
-      {/* <section className="flex flex-col gap-3 py-3 px-2 lg:px-4 lg:py-6">
-        {products.map(({ product_id, product_name, product_image, price }) => {
-          const totalPrice = parseFloat(price) * (quantities[product_id] || 1);
-          return (
-            <div
-              key={product_id}
-              className="flex items-center justify-between p-2 bg-gray-100 rounded"
-            >
-              <div className="flex gap-2 items-center">
-                <CgMenuGridO className="text-xl text-[#E27210]" />
-                <section className="flex items-end gap-2">
-                  <img
-                    src={product_image}
-                    alt={product_name}
-                    className="w-20 h-20 lg:w-24 lg:h-24 lg:rounded-full"
-                  />
-                  <div className="flex flex-col gap-2">
-                    <p className="text-gray-800 text-sm font-medium sm:text-lg md:text-xl lg:text-2xl">
-                      {product_name}
-                    </p>
-                    <p className="text-gray-700 text-xs font-medium sm:text-sm lg:text-lg">
-                      Price: ${price}
-                    </p>
-                  </div>
-                </section>
-              </div>
-              <section>
-                <p>Quantity</p>
-                <section className="flex items-center gap-2">
-                  <button
-                    onClick={() => handleQuantityChange(product_id, "decrease")}
-                    className="w-fit p-2 rounded bg-gray-200"
-                  >
-                    <FaMinus />
-                  </button>
-
-                  <div>{quantities[product_id]}</div>
-                  <button
-                    onClick={() => handleQuantityChange(product_id, "increase")}
-                    className="w-fit p-2 rounded bg-gray-200"
-                  >
-                    <FaPlus />
-                  </button>
-                </section>
-                <p className="text-gray-700 text-sm font-medium mt-1">
-                  Total: ${totalPrice.toFixed(2)}
-                </p>
-              </section>
-              <div className="p-2 hover:bg-gray-200 cursor-pointer rounded-full">
-                <MdDeleteOutline
-                  onClick={() => handleDelete(product_id)}
-                  className="text-2xl text-[#E27210] lg:text-3xl"
-                />
-              </div>
+      {" "}
+      {products.length === 0 ? (
+        <section className="w-full flex flex-col justify-center">
+          <header className="flex flex-col items-center gap-3 justify-center my-10">
+            <div className="bg-gray-100 rounded-full flex items-center justify-center p-6">
+              <MdShoppingCart className="h-32 w-32 text-[#E27210]" />
             </div>
-          );
-        })}
-      </section> */}
-      <section className="flex justify-between px-2 lg:px-4 py-4 border-t-2 border-gray-300">
-        <p className="text-gray-900 text-lg font-semibold">
-          Subtotal: ${subtotal.toFixed(2)}
-        </p>
-        {!loading ? (
-          <button
-            onClick={() => onProceed(subtotal)}
-            className="bg-green-600 text-white px-4 py-2 rounded"
-          >
-            Proceed to Payment
+            <p className="text-gray-600 font-medium">Your cart is empty</p>
+          </header>
+          <button className="w-fit p-2 mx-auto my-4 rounded bg-[#E27210] text-white cursor-pointer">
+            <Link href="/products">Continue shopping</Link>
           </button>
-        ) : (
-          <div className="p-2 rounded text-white font-medium bg-green-500 flex items-center justify-center gap-2">
-            <div className="animate-spin rounded-full border-4 border-t-transparent h-5 w-5 border-white"></div>
-            <div>Processing</div>
-          </div>
-        )}
-      </section>
+        </section>
+      ) : (
+        <>
+          <section className="overflow-x-auto">
+            <table className="w-full border-collapse border border-gray-300">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                    Thumbnail
+                  </th>
+                  <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                    Name
+                  </th>
+                  <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                    Price
+                  </th>
+                  <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                    Quantity
+                  </th>
+                  <th className="border border-gray-300 px-4 py-2 text-[#E27210]">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map(
+                  ({ product_id, product_name, product_image, price }) => {
+                    const totalPrice =
+                      parseFloat(price) * (quantities[product_id] || 1);
+                    return (
+                      <tr key={product_id}>
+                        <td className="border border-gray-300 flex items-center gap-2">
+                          <img
+                            src={product_image}
+                            alt={product_name}
+                            className="w-12 h-12 lg:w-16 lg:h-16 rounded"
+                          />
+                        </td>
+                        <td className="border border-gray-300 font-medium text-gray-800">
+                          {product_name}
+                        </td>
+                        <td className="border border-gray-300 text-green-500 font-medium">
+                          ${price}
+                        </td>
+                        <td className="border border-gray-300 font-medium flex items-center justify-center gap-2">
+                          <div
+                            onClick={() =>
+                              handleQuantityChange(product_id, "decrease")
+                            }
+                            className="w-fit p-2 rounded-full text-white bg-[#E27210]"
+                          >
+                            <FaMinus />
+                          </div>
+                          <div>{quantities[product_id]}</div>
+                          <div>
+                            <FaPlus
+                              onClick={() =>
+                                handleQuantityChange(product_id, "increase")
+                              }
+                              className="w-fit p-2 rounded-full text-white bg-[#E27210]"
+                            />
+                          </div>
+                        </td>
+                        <td className="border border-gray-300 text-center">
+                          <button
+                            onClick={() => handleDelete(product_id)}
+                            className="p-2 hover:bg-gray-200 cursor-pointer rounded-full"
+                          >
+                            <MdDeleteOutline className="text-2xl text-[#E27210] lg:text-3xl" />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  }
+                )}
+              </tbody>
+            </table>
+          </section>
+          <section className="flex justify-between px-2 lg:px-4 py-4 border-t-2 border-gray-300">
+            <p className="text-gray-800 text-lg font-bold lg:text-xl">
+              Subtotal: ${subtotal.toFixed(2)}
+            </p>
+            {!loading ? (
+              <button
+                onClick={() => onProceed(subtotal)}
+                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-white hover:text-gray-800 hover:border-2 hover:border-green-600 transition-all duration-100 ease-in-out"
+              >
+                Proceed to Payment
+              </button>
+            ) : (
+              <div className="p-2 rounded text-white font-medium bg-green-500 flex items-center justify-center gap-2">
+                <div className="animate-spin rounded-full border-4 border-t-transparent h-5 w-5 border-white"></div>
+                <div>Processing</div>
+              </div>
+            )}
+          </section>
+        </>
+      )}
     </div>
   );
 }
