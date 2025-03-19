@@ -47,7 +47,7 @@ export default async function Product({ params }: { params: Params }) {
             <p className="text-gray-700 mt-2">{data.product_description}</p>
 
             <div className="mt-4">
-              <span className="text-lg font-bold text-[#E27210]">
+              <span className="text-lg font-bold text-[#23b142]">
                 ${data.price}
               </span>
               <span className="ml-3 text-gray-600">
