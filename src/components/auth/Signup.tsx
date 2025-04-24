@@ -152,6 +152,7 @@ export default function Signup() {
               Sign In
             </Link>
           </div>
+          </form>
       </section>
     </div>
   );
