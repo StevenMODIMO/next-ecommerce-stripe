@@ -17,4 +17,5 @@ interface Category {
   value: string
 }
 
-export { Feature, Testimony, Category };
+export type { Feature, Testimony, Category };
+
