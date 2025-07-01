@@ -1,4 +1,4 @@
-import {Feature, Testimony, Category } from "@/types/types"
+import type { Feature, Testimony, Category } from "@/types/types"
 
 export const categories: Category[] = [
   {
